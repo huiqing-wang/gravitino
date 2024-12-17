@@ -18,7 +18,7 @@
  */
 package org.apache.gravitino.catalog.wutong.operation;
 
-import static org.apache.gravitino.catalog.postgresql.operation.WutongTableOperations.PG_QUOTE;
+import static org.apache.gravitino.catalog.wutong.operation.WutongTableOperations.PG_QUOTE;
 
 import com.google.common.collect.ImmutableSet;
 import java.sql.Connection;

@@ -140,7 +140,7 @@ export const providers = [
         required: true,
         parentField: 'catalog-backend',
         hide: ['hive', 'rest'],
-        description: `"com.mysql.jdbc.Driver" or "com.mysql.cj.jdbc.Driver" for MySQL, "org.postgresql.Driver" for PostgreSQL`, "com.wutong.Driver" for WuTongDB`
+        description: `"com.mysql.jdbc.Driver" or "com.mysql.cj.jdbc.Driver" for MySQL, "org.postgresql.Driver" for PostgreSQL, "com.wutong.Driver" for WuTongDB`
       },
       {
         key: 'jdbc-user',
