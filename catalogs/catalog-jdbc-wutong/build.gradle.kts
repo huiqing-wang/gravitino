@@ -53,7 +53,7 @@ dependencies {
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.junit.jupiter.params)
   testImplementation(libs.mysql.driver)
-  testImplementation(libs.wutong.driver)
+  testImplementation(libs.wutongdb.driver)
   testImplementation(libs.testcontainers)
   testImplementation(libs.testcontainers.mysql)
   testImplementation(libs.testcontainers.postgresql)
