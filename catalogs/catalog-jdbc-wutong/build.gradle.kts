@@ -43,6 +43,8 @@ dependencies {
   implementation(libs.commons.collections4)
   implementation(libs.commons.lang3)
   implementation(libs.guava)
+  implementation(libs.jsqlparser)
+  // implementation(libs.wutongdb.driver)
 
   testImplementation(project(":catalogs:catalog-jdbc-common", "testArtifacts"))
   testImplementation(project(":clients:client-java"))
@@ -50,10 +52,14 @@ dependencies {
   testImplementation(project(":server"))
   testImplementation(project(":server-common"))
 
+  testImplementation(libs.bundles.log4j)
+  testImplementation(libs.commons.lang3)
+  testImplementation(libs.guava)
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.junit.jupiter.params)
   testImplementation(libs.mysql.driver)
-  testImplementation(libs.wutongdb.driver)
+  testImplementation(libs.postgresql.driver)
+  testImplementation(libs.slf4j.api)
   testImplementation(libs.testcontainers)
   testImplementation(libs.testcontainers.mysql)
   testImplementation(libs.testcontainers.postgresql)
@@ -96,10 +102,16 @@ tasks {
 }
 
 tasks.test {
+  val skipUTs = project.hasProperty("skipTests")
+  if (skipUTs) {
+    // Only run integration tests
+    include("**/integration/**")
+  }
+
   val skipITs = project.hasProperty("skipITs")
   if (skipITs) {
     // Exclude integration tests
-    exclude("**/integration/test/**")
+    exclude("**/integration/**")
   } else {
     // PG will use project jdbc-mysql/build/libs directory, so we add the task dependency here.
     dependsOn(":catalogs:catalog-jdbc-mysql:jar")
