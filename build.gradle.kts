@@ -824,6 +824,7 @@ tasks {
       ":catalogs:catalog-jdbc-mysql:copyLibAndConfig",
       ":catalogs:catalog-jdbc-oceanbase:copyLibAndConfig",
       ":catalogs:catalog-jdbc-postgresql:copyLibAndConfig",
+      ":catalogs:catalog-jdbc-wutong:copyLibAndConfig",
       ":catalogs:catalog-hadoop:copyLibAndConfig",
       ":catalogs:catalog-kafka:copyLibAndConfig",
       ":catalogs:catalog-model:copyLibAndConfig"

@@ -245,6 +245,7 @@ public class IsolatedClassLoader implements Closeable {
             || name.startsWith("org.apache.gravitino.catalog.jdbc.")
             || name.startsWith("org.apache.gravitino.catalog.mysql.")
             || name.startsWith("org.apache.gravitino.catalog.postgresql.")
+            || name.startsWith("org.apache.gravitino.catalog.wutong.")
             || name.startsWith("org.apache.gravitino.catalog.doris.")
             || name.startsWith("org.apache.gravitino.catalog.hadoop.")
             || name.startsWith("org.apache.gravitino.catalog.kafka."));

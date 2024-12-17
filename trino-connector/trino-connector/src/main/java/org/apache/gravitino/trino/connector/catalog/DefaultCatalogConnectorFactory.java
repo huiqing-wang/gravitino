@@ -26,6 +26,7 @@ import org.apache.gravitino.trino.connector.catalog.hive.HiveConnectorAdapter;
 import org.apache.gravitino.trino.connector.catalog.iceberg.IcebergConnectorAdapter;
 import org.apache.gravitino.trino.connector.catalog.jdbc.mysql.MySQLConnectorAdapter;
 import org.apache.gravitino.trino.connector.catalog.jdbc.postgresql.PostgreSQLConnectorAdapter;
+import org.apache.gravitino.trino.connector.catalog.jdbc.wutong.WutongConnectorAdapter;
 import org.apache.gravitino.trino.connector.catalog.jdbc.trino.TrinoClusterConnectorAdapter;
 import org.apache.gravitino.trino.connector.catalog.memory.MemoryConnectorAdapter;
 import org.apache.gravitino.trino.connector.metadata.GravitinoCatalog;
@@ -41,6 +42,7 @@ public class DefaultCatalogConnectorFactory implements CatalogConnectorFactory {
   private static final String MEMORY_CONNECTOR_PROVIDER_NAME = "memory";
   private static final String MYSQL_CONNECTOR_PROVIDER_NAME = "jdbc-mysql";
   private static final String POSTGRESQL_CONNECTOR_PROVIDER_NAME = "jdbc-postgresql";
+  private static final String WUTONG_CONNECTOR_PROVIDER_NAME = "jdbc-wutong";
   private static final String TRINO_CLUSTER_CONNECTOR_PROVIDER_NAME = "trino-cluster";
 
   protected final HashMap<String, CatalogConnectorContext.Builder> catalogBuilders =
@@ -65,6 +67,9 @@ public class DefaultCatalogConnectorFactory implements CatalogConnectorFactory {
     catalogBuilders.put(
         POSTGRESQL_CONNECTOR_PROVIDER_NAME,
         new CatalogConnectorContext.Builder(new PostgreSQLConnectorAdapter()));
+    catalogBuilders.put(
+            WUTONG_CONNECTOR_PROVIDER_NAME,
+            new CatalogConnectorContext.Builder(new WutongConnectorAdapter()));
     catalogBuilders.put(
         TRINO_CLUSTER_CONNECTOR_PROVIDER_NAME,
         new CatalogConnectorContext.Builder(new TrinoClusterConnectorAdapter()));

@@ -140,7 +140,7 @@ export const providers = [
         required: true,
         parentField: 'catalog-backend',
         hide: ['hive', 'rest'],
-        description: `"com.mysql.jdbc.Driver" or "com.mysql.cj.jdbc.Driver" for MySQL, "org.postgresql.Driver" for PostgreSQL`
+        description: `"com.mysql.jdbc.Driver" or "com.mysql.cj.jdbc.Driver" for MySQL, "org.postgresql.Driver" for PostgreSQL`, "com.wutong.Driver" for WuTongDB`
       },
       {
         key: 'jdbc-user',
@@ -180,6 +180,128 @@ export const providers = [
         description: 'The URI of The keytab for the Kerberos authentication.',
         parentField: 'authentication.type',
         hide: ['simple']
+      }
+    ]
+  },
+  {
+    label: 'MySQL',
+    value: 'jdbc-mysql',
+    defaultProps: [
+      {
+        key: 'jdbc-driver',
+        value: '',
+        required: true,
+        description: 'e.g. com.mysql.jdbc.Driver or com.mysql.cj.jdbc.Driver'
+      },
+      {
+        key: 'jdbc-url',
+        value: '',
+        required: true,
+        description: 'e.g. jdbc:mysql://localhost:3306'
+      },
+      {
+        key: 'jdbc-user',
+        value: '',
+        required: true
+      },
+      {
+        key: 'jdbc-password',
+        value: '',
+        required: true
+      }
+    ]
+  },
+  {
+    label: 'PostgreSQL',
+    value: 'jdbc-postgresql',
+    defaultProps: [
+      {
+        key: 'jdbc-driver',
+        value: '',
+        required: true,
+        description: 'e.g. org.postgresql.Driver'
+      },
+      {
+        key: 'jdbc-url',
+        value: '',
+        required: true,
+        description: 'e.g. jdbc:postgresql://localhost:5432/your_database'
+      },
+      {
+        key: 'jdbc-user',
+        value: '',
+        required: true
+      },
+      {
+        key: 'jdbc-password',
+        value: '',
+        required: true
+      },
+      {
+        key: 'jdbc-database',
+        value: '',
+        required: true
+      }
+    ]
+  },
+  {
+    label: 'Wutong',
+    value: 'jdbc-wutong',
+    defaultProps: [
+      {
+        key: 'jdbc-driver',
+        value: 'com.wutong.Driver',
+        required: true,
+        description: 'e.g. com.wutong.Driver'
+      },
+      {
+        key: 'jdbc-url',
+        value: '',
+        required: true,
+        description: 'e.g. jdbc:wutongdb://localhost:5432/your_database'
+      },
+      {
+        key: 'jdbc-user',
+        value: '',
+        required: true
+      },
+      {
+        key: 'jdbc-password',
+        value: '',
+        required: true
+      },
+      {
+        key: 'jdbc-database',
+        value: '',
+        required: true
+      }
+    ]
+  },
+  {
+    label: 'Apache Doris',
+    value: 'jdbc-doris',
+    defaultProps: [
+      {
+        key: 'jdbc-driver',
+        value: '',
+        required: true,
+        description: 'e.g. com.mysql.jdbc.Driver'
+      },
+      {
+        key: 'jdbc-url',
+        value: '',
+        required: true,
+        description: 'e.g. jdbc:mysql://localhost:9030'
+      },
+      {
+        key: 'jdbc-user',
+        value: '',
+        required: true
+      },
+      {
+        key: 'jdbc-password',
+        value: '',
+        required: true
       }
     ]
   },
