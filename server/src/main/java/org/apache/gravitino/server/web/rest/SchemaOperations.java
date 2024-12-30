@@ -204,6 +204,9 @@ public class SchemaOperations {
       @PathParam("catalog") String catalog,
       @PathParam("schema") String schema,
       @DefaultValue("false") @QueryParam("cascade") boolean cascade) {
+    if(true) {
+      throw new UnsupportedOperationException("not supported to dropSchema");
+    }
     LOG.info("Received drop schema request: {}.{}.{}", metalake, catalog, schema);
     try {
       return Utils.doAs(
