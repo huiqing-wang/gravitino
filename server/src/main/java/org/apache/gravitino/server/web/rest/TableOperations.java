@@ -216,7 +216,7 @@ public class TableOperations {
       @PathParam("schema") String schema,
       @PathParam("table") String table,
       @QueryParam("purge") @DefaultValue("false") boolean purge) {
-    if(true) {
+    if (true) {
       throw new UnsupportedOperationException("not supported to dropTable");
     }
     LOG.info(
