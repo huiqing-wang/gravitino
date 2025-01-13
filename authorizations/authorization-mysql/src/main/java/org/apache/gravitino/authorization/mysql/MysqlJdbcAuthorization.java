@@ -17,6 +17,4 @@ public class MysqlJdbcAuthorization extends BaseAuthorization<MysqlJdbcAuthoriza
       String metalake, String catalogProvider, Map<String, String> config) {
     return MysqlJdbcAuthorizationPlugin.getInstance(config);
   }
-
-
 }

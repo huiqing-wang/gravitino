@@ -1,7 +1,6 @@
 package org.apache.gravitino.authorization.postgreqsql;
 
 import java.util.Map;
-
 import org.apache.gravitino.connector.authorization.AuthorizationPlugin;
 import org.apache.gravitino.connector.authorization.BaseAuthorization;
 

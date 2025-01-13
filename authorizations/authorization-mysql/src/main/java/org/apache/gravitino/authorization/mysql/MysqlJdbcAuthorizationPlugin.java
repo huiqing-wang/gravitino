@@ -1,10 +1,9 @@
 package org.apache.gravitino.authorization.mysql;
 
+import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import com.google.common.collect.Lists;
 import org.apache.gravitino.MetadataObject;
 import org.apache.gravitino.authorization.Owner;
 import org.apache.gravitino.authorization.jdbc.JdbcAuthorizationPlugin;
@@ -55,28 +54,27 @@ public class MysqlJdbcAuthorizationPlugin extends JdbcAuthorizationPlugin {
 
   @Override
   public List<String> getGrantPrivilegeSQL(
-          String privilege, String objectType, String objectName, String roleName) {
+      String privilege, String objectType, String objectName, String roleName) {
     return Lists.newArrayList(
-            String.format("GRANT %s ON %s %s TO %s", privilege, objectType, objectName, roleName));
+        String.format("GRANT %s ON %s %s TO %s", privilege, objectType, objectName, roleName));
   }
 
   @Override
   public List<String> getRevokePrivilegeSQL(
-          String privilege, String objectType, String objectName, String roleName) {
+      String privilege, String objectType, String objectName, String roleName) {
     return Lists.newArrayList(
-            String.format(
-                    "REVOKE %s ON %s %s FROM %s", privilege, objectType, objectName, roleName));
+        String.format("REVOKE %s ON %s %s FROM %s", privilege, objectType, objectName, roleName));
   }
 
   @Override
   public List<String> getGrantRoleSQL(String roleName, String grantorType, String grantorName) {
     return Lists.newArrayList(
-            String.format("GRANT %s TO %s %s", roleName, grantorType, grantorName));
+        String.format("GRANT %s TO %s %s", roleName, grantorType, grantorName));
   }
 
   @Override
   public List<String> getRevokeRoleSQL(String roleName, String revokerType, String revokerName) {
     return Lists.newArrayList(
-            String.format("REVOKE %s FROM %s %s", roleName, revokerType, revokerName));
+        String.format("REVOKE %s FROM %s %s", roleName, revokerType, revokerName));
   }
 }
