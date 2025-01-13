@@ -119,7 +119,6 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
         onRoleUpdated(role, RoleChange.addSecurableObject(role.name(), object));
       }
     }
-
     return true;
   }
 
@@ -140,7 +139,9 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
   @Override
   public Boolean onRoleUpdated(Role role, RoleChange... changes)
       throws AuthorizationPluginException {
-    onRoleCreated(role);
+    // TODO
+    // check role exists
+//    onRoleCreated(role);
     for (RoleChange change : changes) {
       if (change instanceof RoleChange.AddSecurableObject) {
         SecurableObject object = ((RoleChange.AddSecurableObject) change).getSecurableObject();
@@ -167,7 +168,8 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
       throws AuthorizationPluginException {
 
     for (Role role : roles) {
-      onRoleCreated(role);
+      // TODO
+//      onRoleCreated(role);
       List<String> sqls = getGrantRoleSQL(role.name(), "USER", user.name());
       for (String sql : sqls) {
         executeUpdateSQL(sql);
@@ -181,7 +183,8 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
       throws AuthorizationPluginException {
 
     for (Role role : roles) {
-      onRoleCreated(role);
+      // TODO
+//      onRoleCreated(role);
       List<String> sqls = getRevokeRoleSQL(role.name(), "USER", user.name());
       for (String sql : sqls) {
         executeUpdateSQL(sql);
@@ -195,7 +198,8 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
       throws AuthorizationPluginException {
 
     for (Role role : roles) {
-      onRoleCreated(role);
+      // TODO
+//      onRoleCreated(role);
       List<String> sqls =
           getGrantRoleSQL(role.name(), "USER", String.format("%s%s", GROUP_PREFIX, group.name()));
       for (String sql : sqls) {
@@ -210,7 +214,8 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
       throws AuthorizationPluginException {
 
     for (Role role : roles) {
-      onRoleCreated(role);
+      // TODO
+//      onRoleCreated(role);
       List<String> sqls =
           getRevokeRoleSQL(role.name(), "USER", String.format("%s%s", GROUP_PREFIX, group.name()));
       for (String sql : sqls) {
