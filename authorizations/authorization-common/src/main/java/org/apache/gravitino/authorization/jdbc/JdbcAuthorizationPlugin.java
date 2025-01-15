@@ -387,6 +387,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
   }
 
   public void executeUpdateSQL(String sql, String ignoreErrorMsg) {
+    LOG.info("executeSQL: {}",sql);
     try (final Connection connection = getConnection()) {
       try (final Statement statement = connection.createStatement()) {
         statement.executeUpdate(sql);
@@ -395,7 +396,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
       if (ignoreErrorMsg != null && se.getMessage().contains(ignoreErrorMsg)) {
         return;
       }
-      LOG.error("JDBC authorization plugin exception: ", se);
+      LOG.error("{}; JDBC authorization plugin exception: ", sql, se);
       throw toAuthorizationPluginException(se);
     }
   }
