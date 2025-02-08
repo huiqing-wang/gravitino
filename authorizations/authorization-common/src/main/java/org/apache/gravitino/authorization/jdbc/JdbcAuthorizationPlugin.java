@@ -141,7 +141,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
       throws AuthorizationPluginException {
     // TODO
     // check role exists
-//    onRoleCreated(role);
+    //    onRoleCreated(role);
     for (RoleChange change : changes) {
       if (change instanceof RoleChange.AddSecurableObject) {
         SecurableObject object = ((RoleChange.AddSecurableObject) change).getSecurableObject();
@@ -169,7 +169,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
 
     for (Role role : roles) {
       // TODO
-//      onRoleCreated(role);
+      //      onRoleCreated(role);
       List<String> sqls = getGrantRoleSQL(role.name(), "USER", user.name());
       for (String sql : sqls) {
         executeUpdateSQL(sql);
@@ -184,7 +184,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
 
     for (Role role : roles) {
       // TODO
-//      onRoleCreated(role);
+      //      onRoleCreated(role);
       List<String> sqls = getRevokeRoleSQL(role.name(), "USER", user.name());
       for (String sql : sqls) {
         executeUpdateSQL(sql);
@@ -199,7 +199,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
 
     for (Role role : roles) {
       // TODO
-//      onRoleCreated(role);
+      //      onRoleCreated(role);
       List<String> sqls =
           getGrantRoleSQL(role.name(), "USER", String.format("%s%s", GROUP_PREFIX, group.name()));
       for (String sql : sqls) {
@@ -215,7 +215,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
 
     for (Role role : roles) {
       // TODO
-//      onRoleCreated(role);
+      //      onRoleCreated(role);
       List<String> sqls =
           getRevokeRoleSQL(role.name(), "USER", String.format("%s%s", GROUP_PREFIX, group.name()));
       for (String sql : sqls) {
@@ -387,7 +387,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
   }
 
   public void executeUpdateSQL(String sql, String ignoreErrorMsg) {
-    LOG.info("executeSQL: {}",sql);
+    LOG.info("executeSQL: {}", sql);
     try (final Connection connection = getConnection()) {
       try (final Statement statement = connection.createStatement()) {
         statement.executeUpdate(sql);
