@@ -130,10 +130,10 @@ public class WutongTableOperations extends JdbcTableOperations {
 
   @Override
   protected JdbcColumn.Builder getColumnBuilder(
-          ResultSet columnsResult, String databaseName, String tableName) throws SQLException {
+      ResultSet columnsResult, String databaseName, String tableName) throws SQLException {
     JdbcColumn.Builder builder = null;
     if (Objects.equals(columnsResult.getString("TABLE_NAME"), tableName)
-            && Objects.equals(columnsResult.getString("TABLE_SCHEM"), databaseName)) {
+        && Objects.equals(columnsResult.getString("TABLE_SCHEM"), databaseName)) {
       builder = getBasicJdbcColumnInfo(columnsResult);
     }
     return builder;
@@ -545,15 +545,15 @@ public class WutongTableOperations extends JdbcTableOperations {
 
     StringBuilder sqlBuilder = new StringBuilder(ALTER_TABLE + jdbcTable.name());
     sqlBuilder
-            .append("\n")
-            .append(ALTER_COLUMN)
-            .append(PG_QUOTE)
-            .append(col)
-            .append(PG_QUOTE)
-            .append(" SET DEFAULT ")
-            .append(
-                    columnDefaultValueConverter.fromGravitino(
-                            updateColumnDefaultValue.getNewDefaultValue()));
+        .append("\n")
+        .append(ALTER_COLUMN)
+        .append(PG_QUOTE)
+        .append(col)
+        .append(PG_QUOTE)
+        .append(" SET DEFAULT ")
+        .append(
+            columnDefaultValueConverter.fromGravitino(
+                updateColumnDefaultValue.getNewDefaultValue()));
     return sqlBuilder.append(";").toString();
   }
 

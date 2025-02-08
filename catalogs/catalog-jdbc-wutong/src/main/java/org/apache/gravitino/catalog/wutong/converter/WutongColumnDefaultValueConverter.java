@@ -96,16 +96,13 @@ public class WutongColumnDefaultValueConverter extends JdbcColumnDefaultValueCon
         return Literals.doubleLiteral(Double.valueOf(columnDefaultValue));
       case WutongTypeConverter.NUMERIC:
         return Literals.decimalLiteral(
-            Decimal.of(
-                columnDefaultValue,
-                Integer.parseInt(type.getColumnSize()),
-                Integer.parseInt(type.getScale())));
+            Decimal.of(columnDefaultValue, type.getColumnSize(), type.getScale()));
       case JdbcTypeConverter.DATE:
         return Literals.dateLiteral(LocalDate.parse(columnDefaultValue, DATE_TIME_FORMATTER));
       case WutongTypeConverter.TIMESTAMP_TZ:
         return Literals.timeLiteral(LocalTime.parse(columnDefaultValue, DATE_TIME_FORMATTER));
       case VARCHAR:
-        return Literals.varcharLiteral(Integer.parseInt(type.getColumnSize()), columnDefaultValue);
+        return Literals.varcharLiteral(type.getColumnSize(), columnDefaultValue);
       case WutongTypeConverter.BPCHAR:
       case JdbcTypeConverter.TEXT:
         return Literals.stringLiteral(columnDefaultValue);

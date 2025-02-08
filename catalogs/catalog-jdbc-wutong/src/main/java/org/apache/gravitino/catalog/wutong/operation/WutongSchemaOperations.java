@@ -19,7 +19,6 @@
 package org.apache.gravitino.catalog.wutong.operation;
 
 import static org.apache.gravitino.catalog.wutong.operation.WutongTableOperations.PG_QUOTE;
-import static org.apache.gravitino.catalog.postgresql.operation.WutongTableOperations.PG_QUOTE;
 
 import com.google.common.collect.ImmutableSet;
 import java.sql.Connection;
@@ -142,7 +141,7 @@ public class WutongSchemaOperations extends JdbcDatabaseOperations {
   @Override
   public String generateDropDatabaseSql(String schema, boolean cascade) {
     StringBuilder sqlBuilder =
-            new StringBuilder(String.format("DROP SCHEMA %s%s%s", PG_QUOTE, schema, PG_QUOTE));
+        new StringBuilder(String.format("DROP SCHEMA %s%s%s", PG_QUOTE, schema, PG_QUOTE));
     if (cascade) {
       sqlBuilder.append(" CASCADE");
     }
@@ -168,10 +167,10 @@ public class WutongSchemaOperations extends JdbcDatabaseOperations {
 
   private String getShowSchemaCommentSql(String schema) {
     return String.format(
-            "SELECT obj_description(n.oid, 'pg_namespace') AS comment\n"
-                    + "FROM pg_catalog.pg_namespace n\n"
-                    + "WHERE n.nspname = '%s';\n",
-            schema);
+        "SELECT obj_description(n.oid, 'pg_namespace') AS comment\n"
+            + "FROM pg_catalog.pg_namespace n\n"
+            + "WHERE n.nspname = '%s';\n",
+        schema);
   }
 
   private String getSchemaComment(String schema, Connection connection) throws SQLException {
