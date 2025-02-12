@@ -56,26 +56,41 @@ public class PostgresqlJdbcAuthorizationPlugin extends JdbcAuthorizationPlugin {
   @Override
   public List<String> getGrantPrivilegeSQL(
       String privilege, String objectType, String objectName, String roleName) {
-    return Lists.newArrayList(
-        String.format("GRANT %s ON %s %s TO %s", privilege, objectType, objectName, roleName));
+    String[] parts = objectName.split("\\.");
+    String schema = parts[0];
+    String tableOrView = parts.length > 1 ? parts[1] : null;
+    if (tableOrView != null && tableOrView.equals("*")) {
+      return Lists.newArrayList(
+          String.format("GRANT %s ON ALL TABLES IN SCHEMA %s TO %s", privilege, schema, roleName));
+    } else {
+      return Lists.newArrayList(
+          String.format("GRANT %s ON %s %s TO %s", privilege, objectType, objectName, roleName));
+    }
   }
 
   @Override
   public List<String> getRevokePrivilegeSQL(
       String privilege, String objectType, String objectName, String roleName) {
-    return Lists.newArrayList(
-        String.format("REVOKE %s ON %s %s FROM %s", privilege, objectType, objectName, roleName));
+    String[] parts = objectName.split("\\.");
+    String schema = parts[0];
+    String tableOrView = parts.length > 1 ? parts[1] : null;
+    if (tableOrView != null && tableOrView.equals("*")) {
+      return Lists.newArrayList(
+          String.format(
+              "REVOKE %s ON ALL TABLES IN SCHEMA %s FROM %s", privilege, schema, roleName));
+    } else {
+      return Lists.newArrayList(
+          String.format("REVOKE %s ON %s %s FROM %s", privilege, objectType, objectName, roleName));
+    }
   }
 
   @Override
   public List<String> getGrantRoleSQL(String roleName, String grantorType, String grantorName) {
-    return Lists.newArrayList(
-        String.format("GRANT %s TO %s %s", roleName, grantorType, grantorName));
+    return Lists.newArrayList(String.format("GRANT %s TO %s", roleName, grantorName));
   }
 
   @Override
   public List<String> getRevokeRoleSQL(String roleName, String revokerType, String revokerName) {
-    return Lists.newArrayList(
-        String.format("REVOKE %s FROM %s %s", roleName, revokerType, revokerName));
+    return Lists.newArrayList(String.format("REVOKE %s FROM %s", roleName, revokerName));
   }
 }
