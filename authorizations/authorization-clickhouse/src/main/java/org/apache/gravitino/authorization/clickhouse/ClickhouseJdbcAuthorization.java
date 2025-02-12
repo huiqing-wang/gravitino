@@ -9,7 +9,7 @@ public class ClickhouseJdbcAuthorization extends BaseAuthorization<ClickhouseJdb
 
   @Override
   public String shortName() {
-    return "mysql";
+    return "clickhouse";
   }
 
   @Override
