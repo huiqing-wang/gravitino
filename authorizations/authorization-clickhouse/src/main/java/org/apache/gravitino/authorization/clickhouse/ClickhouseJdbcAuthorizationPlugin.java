@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.gravitino.MetadataObject;
 import org.apache.gravitino.authorization.Owner;
 import org.apache.gravitino.authorization.jdbc.JdbcAuthorizationPlugin;
+import org.apache.gravitino.authorization.jdbc.JdbcPrivilege;
 
 public class ClickhouseJdbcAuthorizationPlugin extends JdbcAuthorizationPlugin {
   private static volatile ClickhouseJdbcAuthorizationPlugin instance = null;
@@ -56,26 +57,28 @@ public class ClickhouseJdbcAuthorizationPlugin extends JdbcAuthorizationPlugin {
   @Override
   public List<String> getGrantPrivilegeSQL(
       String privilege, String objectType, String objectName, String roleName) {
-    return Lists.newArrayList(
-        String.format("GRANT %s ON %s %s TO %s", privilege, objectType, objectName, roleName));
+    if (JdbcPrivilege.USAGE.getName().equals(privilege)) {
+      return Lists.newArrayList();
+    } else {
+      return Lists.newArrayList(
+          String.format("GRANT %s ON %s TO %s", privilege, objectName, roleName));
+    }
   }
 
   @Override
   public List<String> getRevokePrivilegeSQL(
       String privilege, String objectType, String objectName, String roleName) {
     return Lists.newArrayList(
-        String.format("REVOKE %s ON %s %s FROM %s", privilege, objectType, objectName, roleName));
+        String.format("REVOKE %s ON %s FROM %s", privilege, objectName, roleName));
   }
 
   @Override
   public List<String> getGrantRoleSQL(String roleName, String grantorType, String grantorName) {
-    return Lists.newArrayList(
-        String.format("GRANT %s TO %s %s", roleName, grantorType, grantorName));
+    return Lists.newArrayList(String.format("GRANT %s TO %s", roleName, grantorName));
   }
 
   @Override
   public List<String> getRevokeRoleSQL(String roleName, String revokerType, String revokerName) {
-    return Lists.newArrayList(
-        String.format("REVOKE %s FROM %s %s", roleName, revokerType, revokerName));
+    return Lists.newArrayList(String.format("REVOKE %s FROM %s", roleName, revokerName));
   }
 }
