@@ -65,6 +65,7 @@ include(
   "authorizations:authorization-chain",
   "authorizations:authorization-mysql",
   "authorizations:authorization-postgresql",
+  "authorizations:authorization-wutong",
   "authorizations:authorization-clickhouse"
 )
 include("trino-connector:trino-connector", "trino-connector:integration-test")
