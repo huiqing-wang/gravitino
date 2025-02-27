@@ -22,9 +22,7 @@ import org.apache.gravitino.catalog.jdbc.converter.JdbcTypeConverter;
 import org.apache.gravitino.rel.types.Type;
 import org.apache.gravitino.rel.types.Types;
 
-/**
- * Type converter for Phoenix.
- */
+/** Type converter for Phoenix. */
 public class PhoenixTypeConverter extends JdbcTypeConverter {
 
   static final String INTEGER = "INTEGER";
@@ -107,7 +105,7 @@ public class PhoenixTypeConverter extends JdbcTypeConverter {
       case VARBINARY:
         return Types.BinaryType.get();
       case ARRAY:
-        //TODO maybe can implements?
+        // TODO maybe can implements?
         return Types.ExternalType.of(typeBean.getTypeName());
       default:
         return Types.ExternalType.of(typeBean.getTypeName());

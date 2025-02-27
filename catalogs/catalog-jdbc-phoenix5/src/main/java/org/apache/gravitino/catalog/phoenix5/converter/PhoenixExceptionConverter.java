@@ -18,6 +18,7 @@
  */
 package org.apache.gravitino.catalog.phoenix5.converter;
 
+import java.sql.SQLException;
 import org.apache.gravitino.catalog.jdbc.converter.JdbcExceptionConverter;
 import org.apache.gravitino.exceptions.GravitinoRuntimeException;
 import org.apache.gravitino.exceptions.NoSuchSchemaException;
@@ -25,11 +26,7 @@ import org.apache.gravitino.exceptions.NoSuchTableException;
 import org.apache.gravitino.exceptions.SchemaAlreadyExistsException;
 import org.apache.gravitino.exceptions.TableAlreadyExistsException;
 
-import java.sql.SQLException;
-
-/**
- * Exception converter to Apache Gravitino exception for Phoenix.
- */
+/** Exception converter to Apache Gravitino exception for Phoenix. */
 public class PhoenixExceptionConverter extends JdbcExceptionConverter {
 
   static final int DATABASE_ALREADY_EXISTS = 721;
@@ -57,6 +54,5 @@ public class PhoenixExceptionConverter extends JdbcExceptionConverter {
       default:
         return new GravitinoRuntimeException(sqlException, sqlException.getMessage());
     }
-
   }
 }

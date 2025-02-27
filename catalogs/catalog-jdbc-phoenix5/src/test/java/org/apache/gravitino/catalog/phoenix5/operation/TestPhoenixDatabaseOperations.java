@@ -18,21 +18,20 @@
  */
 package org.apache.gravitino.catalog.phoenix5.operation;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.gravitino.utils.RandomNameUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Tag("gravitino-docker-test")
 public class TestPhoenixDatabaseOperations extends TestPhoenix {
 
   @Test
   public void testBaseOperationDatabase() {
-    //phoenix database is uppercase
+    // phoenix database is uppercase
     String databaseName = RandomNameUtils.genRandomName("ct_db").toUpperCase();
     Map<String, String> properties = new HashMap<>();
     String comment = null;
@@ -40,8 +39,7 @@ public class TestPhoenixDatabaseOperations extends TestPhoenix {
     ((PhoenixDatabaseOperations) DATABASE_OPERATIONS)
         .createSysDatabaseNameSet()
         .forEach(
-            phoneixDatabaseName ->
-                Assertions.assertFalse(databases.contains(phoneixDatabaseName)));
+            phoneixDatabaseName -> Assertions.assertFalse(databases.contains(phoneixDatabaseName)));
     testBaseOperation(databaseName, properties, comment);
 
     testDropDatabase(databaseName);

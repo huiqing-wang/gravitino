@@ -19,10 +19,6 @@
 package org.apache.gravitino.catalog.phoenix5.operation;
 
 import com.google.common.collect.ImmutableSet;
-
-import org.apache.commons.collections4.MapUtils;
-import org.apache.gravitino.catalog.jdbc.operation.JdbcDatabaseOperations;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,10 +29,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.gravitino.catalog.jdbc.operation.JdbcDatabaseOperations;
 
-/**
- * Database operations for Phoenix.
- */
+/** Database operations for Phoenix. */
 public class PhoenixDatabaseOperations extends JdbcDatabaseOperations {
 
   @Override
@@ -69,8 +65,7 @@ public class PhoenixDatabaseOperations extends JdbcDatabaseOperations {
       // so here we manually set a system catalog
       //      connection.setCatalog(createSysDatabaseNameSet().iterator().next());
       try (Statement statement = connection.createStatement();
-          ResultSet resultSet = statement.executeQuery(
-              "SELECT TABLE_SCHEM FROM SYSTEM.CATALOG ")) {
+          ResultSet resultSet = statement.executeQuery("SELECT TABLE_SCHEM FROM SYSTEM.CATALOG ")) {
         while (resultSet.next()) {
           String databaseName = resultSet.getString(1);
           if (!isSystemDatabase(databaseName)) {

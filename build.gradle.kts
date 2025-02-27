@@ -217,7 +217,7 @@ allprojects {
 
       param.useJUnitPlatform()
       val skipUTs = project.hasProperty("skipTests")
-      println("sdhishihsshohohshhis hihsih shihihs hihihsihs skipUTs is ${skipUTs}")
+      println("sdhishihsshohohshhis hihsih shihihs hihihsihs skipUTs is $skipUTs")
       if (skipUTs) {
         // Only run integration tests
         param.include("**/integration/test/**")

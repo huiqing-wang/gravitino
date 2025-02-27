@@ -51,8 +51,7 @@ import org.junit.jupiter.api.Test;
 /** Test class for {@link PhoenixTypeConverter} */
 public class TestPhoenixTypeConverter {
 
-  private static final PhoenixTypeConverter PHOENIX_TYPE_CONVERTER =
-      new PhoenixTypeConverter();
+  private static final PhoenixTypeConverter PHOENIX_TYPE_CONVERTER = new PhoenixTypeConverter();
   private static final String USER_DEFINED_TYPE = "user-defined";
 
   @Test
@@ -73,7 +72,8 @@ public class TestPhoenixTypeConverter {
     checkJdbcTypeToGravitinoType(Types.TimeType.get(), UNSIGNED_TIME, null, null);
     checkJdbcTypeToGravitinoType(Types.DateType.get(), DATE, null, null);
     checkJdbcTypeToGravitinoType(Types.TimestampType.withTimeZone(), TIMESTAMP, null, null);
-    checkJdbcTypeToGravitinoType(Types.TimestampType.withoutTimeZone(), UNSIGNED_TIMESTAMP, null, null);
+    checkJdbcTypeToGravitinoType(
+        Types.TimestampType.withoutTimeZone(), UNSIGNED_TIMESTAMP, null, null);
     checkJdbcTypeToGravitinoType(Types.DecimalType.of(10, 2), DECIMAL, 10, 2);
     checkJdbcTypeToGravitinoType(Types.StringType.get(), VARCHAR, 20, null);
     checkJdbcTypeToGravitinoType(Types.FixedCharType.of(20), CHAR, 20, null);
@@ -100,7 +100,7 @@ public class TestPhoenixTypeConverter {
     checkGravitinoTypeToJdbcType(DOUBLE, Types.DoubleType.get());
     checkGravitinoTypeToJdbcType(UNSIGNED_DOUBLE, Types.DoubleType.unsigned());
     checkGravitinoTypeToJdbcType(TIME, Types.TimeType.get());
-//    checkGravitinoTypeToJdbcType(UNSIGNED_TIME, Types.TimeType.get());
+    //    checkGravitinoTypeToJdbcType(UNSIGNED_TIME, Types.TimeType.get());
 
     checkGravitinoTypeToJdbcType(DATE, Types.DateType.get());
     checkGravitinoTypeToJdbcType(TIMESTAMP, Types.TimestampType.withTimeZone());

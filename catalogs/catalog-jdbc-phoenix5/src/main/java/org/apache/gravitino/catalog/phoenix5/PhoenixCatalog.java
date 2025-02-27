@@ -19,11 +19,6 @@
 package org.apache.gravitino.catalog.phoenix5;
 
 import java.util.Map;
-import org.apache.gravitino.catalog.phoenix5.converter.PhoenixColumnDefaultValueConverter;
-import org.apache.gravitino.catalog.phoenix5.converter.PhoenixExceptionConverter;
-import org.apache.gravitino.catalog.phoenix5.converter.PhoenixTypeConverter;
-import org.apache.gravitino.catalog.phoenix5.operation.PhoenixDatabaseOperations;
-import org.apache.gravitino.catalog.phoenix5.operation.PhoenixTableOperations;
 import org.apache.gravitino.catalog.jdbc.JdbcCatalog;
 import org.apache.gravitino.catalog.jdbc.JdbcCatalogOperations;
 import org.apache.gravitino.catalog.jdbc.converter.JdbcColumnDefaultValueConverter;
@@ -31,6 +26,11 @@ import org.apache.gravitino.catalog.jdbc.converter.JdbcExceptionConverter;
 import org.apache.gravitino.catalog.jdbc.converter.JdbcTypeConverter;
 import org.apache.gravitino.catalog.jdbc.operation.JdbcDatabaseOperations;
 import org.apache.gravitino.catalog.jdbc.operation.JdbcTableOperations;
+import org.apache.gravitino.catalog.phoenix5.converter.PhoenixColumnDefaultValueConverter;
+import org.apache.gravitino.catalog.phoenix5.converter.PhoenixExceptionConverter;
+import org.apache.gravitino.catalog.phoenix5.converter.PhoenixTypeConverter;
+import org.apache.gravitino.catalog.phoenix5.operation.PhoenixDatabaseOperations;
+import org.apache.gravitino.catalog.phoenix5.operation.PhoenixTableOperations;
 import org.apache.gravitino.connector.CatalogOperations;
 import org.apache.gravitino.connector.PropertiesMetadata;
 import org.apache.gravitino.connector.capability.Capability;

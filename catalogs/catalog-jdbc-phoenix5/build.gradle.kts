@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- description = "catalog-jdbc-phoenix5"
+description = "catalog-jdbc-phoenix5"
 
 plugins {
   `maven-publish`
@@ -105,7 +105,7 @@ tasks.test {
 //    // Exclude integration tests
 //    exclude("**/integration/test/**")
 //  } else {
-    dependsOn(tasks.jar)
+  dependsOn(tasks.jar)
 //  }
 }
 

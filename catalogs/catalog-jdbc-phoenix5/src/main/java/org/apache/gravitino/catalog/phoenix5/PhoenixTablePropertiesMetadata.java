@@ -20,14 +20,11 @@ package org.apache.gravitino.catalog.phoenix5;
 
 import static org.apache.gravitino.connector.PropertyEntry.stringReservedPropertyEntry;
 
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.TreeBidiMap;
-import org.apache.gravitino.catalog.jdbc.JdbcTablePropertiesMetadata;
-import org.apache.gravitino.connector.PropertyEntry;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.gravitino.catalog.jdbc.JdbcTablePropertiesMetadata;
+import org.apache.gravitino.connector.PropertyEntry;
 
 public class PhoenixTablePropertiesMetadata extends JdbcTablePropertiesMetadata {
 
@@ -44,5 +41,4 @@ public class PhoenixTablePropertiesMetadata extends JdbcTablePropertiesMetadata 
   protected Map<String, PropertyEntry<?>> specificPropertyEntries() {
     return PROPERTIES_METADATA;
   }
-
 }

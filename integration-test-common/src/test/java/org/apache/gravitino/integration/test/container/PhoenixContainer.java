@@ -21,14 +21,6 @@ package org.apache.gravitino.integration.test.container;
 import static java.lang.String.format;
 
 import com.google.common.collect.ImmutableSet;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.gravitino.integration.test.util.TestDatabaseName;
-import org.rnorth.ducttape.Preconditions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testcontainers.containers.Network;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -36,6 +28,12 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.gravitino.integration.test.util.TestDatabaseName;
+import org.rnorth.ducttape.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testcontainers.containers.Network;
 
 public class PhoenixContainer extends BaseContainer {
   public static final Logger LOG = LoggerFactory.getLogger(PhoenixContainer.class);
@@ -91,8 +89,7 @@ public class PhoenixContainer extends BaseContainer {
       String query = String.format("CREATE SCHEMA %s ", testDatabaseName);
       // FIXME: String, which is used in SQL, can be unsafe
       statement.execute(query);
-      LOG.info(
-          String.format("phoenix container database %s has been created", testDatabaseName));
+      LOG.info(String.format("phoenix container database %s has been created", testDatabaseName));
     } catch (Exception e) {
       LOG.error(e.getMessage(), e);
     }
@@ -111,8 +108,7 @@ public class PhoenixContainer extends BaseContainer {
   }
 
   public String getJdbcUrl(TestDatabaseName testDatabaseName) {
-    return format(
-        "jdbc:phoenix:%s:%d/%s", getContainerIpAddress(), PHOENIX_PORT, testDatabaseName);
+    return format("jdbc:phoenix:%s:%d/%s", getContainerIpAddress(), PHOENIX_PORT, testDatabaseName);
   }
 
   public String getDriverClassName(TestDatabaseName testDatabaseName) throws SQLException {

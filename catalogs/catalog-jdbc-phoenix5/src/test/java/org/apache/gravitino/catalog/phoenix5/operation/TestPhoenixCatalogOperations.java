@@ -19,8 +19,8 @@
 package org.apache.gravitino.catalog.phoenix5.operation;
 
 import java.sql.SQLException;
-import org.apache.gravitino.catalog.phoenix5.PhoenixCatalog;
 import org.apache.gravitino.catalog.jdbc.JdbcCatalogOperations;
+import org.apache.gravitino.catalog.phoenix5.PhoenixCatalog;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 

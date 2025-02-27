@@ -19,7 +19,10 @@
 package org.apache.gravitino.catalog.phoenix5.operation;
 
 import com.google.common.collect.Maps;
-
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Map;
+import javax.sql.DataSource;
 import org.apache.gravitino.catalog.jdbc.TestJdbc;
 import org.apache.gravitino.catalog.jdbc.config.JdbcConfig;
 import org.apache.gravitino.catalog.jdbc.utils.DataSourceUtils;
@@ -29,15 +32,11 @@ import org.apache.gravitino.catalog.phoenix5.converter.PhoenixTypeConverter;
 import org.apache.gravitino.integration.test.util.TestDatabaseName;
 import org.junit.jupiter.api.BeforeAll;
 
-import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Map;
-import javax.sql.DataSource;
-
 public class TestPhoenix extends TestJdbc {
 
   protected static TestDatabaseName TEST_DB_NAME;
-//  private static final String JDBC_URL = "jdbc:phoenix:127.0.0.1:2181;phoenix.schema.isNamespaceMappingEnabled=true";
+  //  private static final String JDBC_URL =
+  // "jdbc:phoenix:127.0.0.1:2181;phoenix.schema.isNamespaceMappingEnabled=true";
   private static final String JDBC_URL = "jdbc:phoenix:127.0.0.1:2181";
   private static final String JDBC_DRIVER = "org.apache.phoenix.jdbc.PhoenixDriver";
   private static final String USERNAME = "USERNAME";
@@ -66,12 +65,11 @@ public class TestPhoenix extends TestJdbc {
     Map<String, String> catalogProperties = Maps.newHashMap();
 
     catalogProperties.put(JdbcConfig.JDBC_URL.getKey(), JDBC_URL);
-    catalogProperties.put(
-        JdbcConfig.JDBC_DRIVER.getKey(), JDBC_DRIVER);
+    catalogProperties.put(JdbcConfig.JDBC_DRIVER.getKey(), JDBC_DRIVER);
     catalogProperties.put(JdbcConfig.USERNAME.getKey(), USERNAME);
     catalogProperties.put(JdbcConfig.PASSWORD.getKey(), PASSWORD);
 
-//    catalogProperties.put("phoenix.schema.isNamespaceMappingEnabled", "true");
+    //    catalogProperties.put("phoenix.schema.isNamespaceMappingEnabled", "true");
 
     return catalogProperties;
   }

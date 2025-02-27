@@ -22,7 +22,14 @@ import static org.apache.gravitino.rel.Column.DEFAULT_VALUE_NOT_SET;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -40,20 +47,8 @@ import org.apache.gravitino.rel.expressions.sorts.SortOrder;
 import org.apache.gravitino.rel.expressions.transforms.Transform;
 import org.apache.gravitino.rel.indexes.Index;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-/**
- * Table operations for Phoenix.
- */
+/** Table operations for Phoenix. */
 public class PhoenixTableOperations extends JdbcTableOperations {
-
 
   @Override
   public void create(
@@ -120,17 +115,12 @@ public class PhoenixTableOperations extends JdbcTableOperations {
 
     validateIncrementCol(columns, indexes);
     StringBuilder sqlBuilder = new StringBuilder();
-    sqlBuilder
-        .append("CREATE TABLE ")
-        .append(databaseName + "." + tableName)
-        .append(" (\n");
+    sqlBuilder.append("CREATE TABLE ").append(databaseName + "." + tableName).append(" (\n");
 
     // Add columns
     for (int i = 0; i < columns.length; i++) {
       JdbcColumn column = columns[i];
-      sqlBuilder
-          .append(SPACE)
-          .append(column.name());
+      sqlBuilder.append(SPACE).append(column.name());
 
       appendColumnDefinition(column, sqlBuilder);
       // Add a comma for the next column, unless it's the last one
@@ -168,8 +158,11 @@ public class PhoenixTableOperations extends JdbcTableOperations {
       sqlBuilder.append(",\n");
       switch (index.type()) {
         case PRIMARY_KEY:
-          sqlBuilder.append(String.format(" CONSTRAINT %s PRIMARY KEY ", index.name()))
-              .append("(").append(fieldStr).append(")");
+          sqlBuilder
+              .append(String.format(" CONSTRAINT %s PRIMARY KEY ", index.name()))
+              .append("(")
+              .append(fieldStr)
+              .append(")");
           break;
         default:
           throw new IllegalArgumentException(
@@ -194,7 +187,7 @@ public class PhoenixTableOperations extends JdbcTableOperations {
   protected ResultSet getTables(Connection connection, String database) throws SQLException {
     final DatabaseMetaData metaData = connection.getMetaData();
     //    String catalogName = connection.getCatalog();
-//    String schemaName = connection.getSchema();
+    //    String schemaName = connection.getSchema();
     // Phoenix tables include : DICTIONARY", "LOG TABLE", "MEMORY TABLE",
     // "REMOTE TABLE", "TABLE", "VIEW", "SYSTEM TABLE", "TEMPORARY TABLE
     return metaData.getTables(connection.getCatalog(), database, null, null);
@@ -207,11 +200,10 @@ public class PhoenixTableOperations extends JdbcTableOperations {
   }
 
   @Override
-  protected String generateAlterTableSql(String databaseName, String tableName,
-      TableChange... changes) {
+  protected String generateAlterTableSql(
+      String databaseName, String tableName, TableChange... changes) {
     throw new UnsupportedOperationException("alter table is not supported");
   }
-
 
   private StringBuilder appendColumnDefinition(JdbcColumn column, StringBuilder sqlBuilder) {
     // Add Nullable data type
@@ -242,7 +234,7 @@ public class PhoenixTableOperations extends JdbcTableOperations {
 
   protected Connection getConnection(String catalog) throws SQLException {
     return dataSource.getConnection();
-//    throw new UnsupportedOperationException("cannot get connection via catalog");
+    //    throw new UnsupportedOperationException("cannot get connection via catalog");
   }
 
   protected ResultSet getTable(Connection connection, String databaseName, String tableName)
@@ -268,11 +260,11 @@ public class PhoenixTableOperations extends JdbcTableOperations {
     Expression defaultValue =
         columnDefaultValueConverter.toGravitino(typeBean, columnDef, false, nullable);
 
-//    String columnFamily = column.getString("COLUMN_FAMILY");
+    //    String columnFamily = column.getString("COLUMN_FAMILY");
     String columnName = column.getString("COLUMN_NAME");
-//    if (StringUtils.isNotEmpty(columnFamily)) {
-//      columnName = columnFamily + ":" + columnName;
-//    }
+    //    if (StringUtils.isNotEmpty(columnFamily)) {
+    //      columnName = columnFamily + ":" + columnName;
+    //    }
 
     return JdbcColumn.builder()
         .withName(columnName)
@@ -292,12 +284,17 @@ public class PhoenixTableOperations extends JdbcTableOperations {
       while (tables.next()) {
         //        if (Objects.equals(tables.getString("TABLE_CAT"), databaseName.toUpperCase())) {
         System.out.println(
-            tables.getString("TABLE_CAT") + "1  " + tables.getString("TABLE_SCHEM") + "2  "
+            tables.getString("TABLE_CAT")
+                + "1  "
+                + tables.getString("TABLE_SCHEM")
+                + "2  "
                 + tables.getString("TABLE_NAME"));
         names.add(tables.getString("TABLE_NAME"));
         //        }
       }
-      LOG.info("Finished listing tables size {} for database name {} ", names.size(),
+      LOG.info(
+          "Finished listing tables size {} for database name {} ",
+          names.size(),
           databaseName.toUpperCase());
       return names;
     } catch (final SQLException se) {

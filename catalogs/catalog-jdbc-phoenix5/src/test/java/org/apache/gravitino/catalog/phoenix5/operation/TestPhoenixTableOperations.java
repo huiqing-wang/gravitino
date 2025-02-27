@@ -18,7 +18,11 @@
  */
 package org.apache.gravitino.catalog.phoenix5.operation;
 
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.gravitino.catalog.jdbc.JdbcColumn;
 import org.apache.gravitino.catalog.jdbc.JdbcTable;
 import org.apache.gravitino.rel.expressions.distributions.Distributions;
@@ -28,15 +32,8 @@ import org.apache.gravitino.rel.indexes.Indexes;
 import org.apache.gravitino.rel.types.Type;
 import org.apache.gravitino.rel.types.Types;
 import org.apache.gravitino.utils.RandomNameUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Tag("gravitino-docker-test")
 public class TestPhoenixTableOperations extends TestPhoenix {
@@ -128,25 +125,22 @@ public class TestPhoenixTableOperations extends TestPhoenix {
             .withNullable(true)
             .build());
 
-//    columns.add(
-//        JdbcColumn.builder()
-//            .withName("COL_16.FOR")
-//            .withType(Types.FixedCharType.of(10))
-//            .withNullable(true)
-//            .build());
-//
-//    columns.add(
-//        JdbcColumn.builder()
-//            .withName("COL_16.BAR")
-//            .withType(Types.FixedCharType.of(10))
-//            .withNullable(true)
-//            .build());
+    //    columns.add(
+    //        JdbcColumn.builder()
+    //            .withName("COL_16.FOR")
+    //            .withType(Types.FixedCharType.of(10))
+    //            .withNullable(true)
+    //            .build());
+    //
+    //    columns.add(
+    //        JdbcColumn.builder()
+    //            .withName("COL_16.BAR")
+    //            .withType(Types.FixedCharType.of(10))
+    //            .withNullable(true)
+    //            .build());
 
     // Test create increment key for unique index.
-    Index[] indexes =
-        new Index[]{
-            Indexes.primary("PK_COL_1", new String[][]{{"col_1"}})
-        };
+    Index[] indexes = new Index[] {Indexes.primary("PK_COL_1", new String[][] {{"col_1"}})};
 
     Map<String, String> properties = new HashMap<>();
     String comment = null;

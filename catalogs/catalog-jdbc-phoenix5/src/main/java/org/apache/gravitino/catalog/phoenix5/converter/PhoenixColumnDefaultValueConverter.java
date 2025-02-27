@@ -24,7 +24,6 @@ import static org.apache.gravitino.rel.Column.DEFAULT_VALUE_OF_CURRENT_TIMESTAMP
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
 import org.apache.gravitino.catalog.jdbc.converter.JdbcColumnDefaultValueConverter;
 import org.apache.gravitino.catalog.jdbc.converter.JdbcTypeConverter;
 import org.apache.gravitino.rel.expressions.Expression;
@@ -37,7 +36,6 @@ import org.apache.gravitino.rel.types.Type;
 import org.apache.gravitino.rel.types.Types;
 
 public class PhoenixColumnDefaultValueConverter extends JdbcColumnDefaultValueConverter {
-
 
   public String fromGravitino(Expression defaultValue) {
     if (DEFAULT_VALUE_NOT_SET.equals(defaultValue)) {
@@ -74,7 +72,7 @@ public class PhoenixColumnDefaultValueConverter extends JdbcColumnDefaultValueCo
       String columnDefaultValue,
       boolean isExpression,
       boolean nullable) {
-    //Phoenix don't support col expression
+    // Phoenix don't support col expression
     if (columnDefaultValue == null || columnDefaultValue.isEmpty()) {
       return nullable ? Literals.NULL : DEFAULT_VALUE_NOT_SET;
     }
@@ -132,8 +130,7 @@ public class PhoenixColumnDefaultValueConverter extends JdbcColumnDefaultValueCo
           return Literals.dateLiteral(LocalDate.parse(reallyValue, DATE_FORMATTER));
         case PhoenixTypeConverter.TIME:
         case PhoenixTypeConverter.UNSIGNED_TIME:
-          return Literals.timeLiteral(
-              LocalTime.parse(columnDefaultValue, DATE_TIME_FORMATTER));
+          return Literals.timeLiteral(LocalTime.parse(columnDefaultValue, DATE_TIME_FORMATTER));
         case PhoenixTypeConverter.TIMESTAMP:
         case PhoenixTypeConverter.UNSIGNED_TIMESTAMP:
           return CURRENT_TIMESTAMP.equals(reallyValue)
