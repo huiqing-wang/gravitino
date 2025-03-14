@@ -437,7 +437,7 @@ export const providers = [
     ]
   },
   {
-    label: 'Phoenix',
+    label: 'Phoenix5',
     value: 'jdbc-phoenix5',
     defaultProps: [
       {
