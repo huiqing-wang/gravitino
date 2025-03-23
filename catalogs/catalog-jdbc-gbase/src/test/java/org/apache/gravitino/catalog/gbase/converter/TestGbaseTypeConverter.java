@@ -41,13 +41,10 @@ import org.apache.gravitino.rel.types.Types;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/**
- * Test class for {@link GbaseTypeConverter}
- */
+/** Test class for {@link GbaseTypeConverter} */
 public class TestGbaseTypeConverter {
 
-  private static final GbaseTypeConverter GBASE_TYPE_CONVERTER =
-      new GbaseTypeConverter();
+  private static final GbaseTypeConverter GBASE_TYPE_CONVERTER = new GbaseTypeConverter();
   private static final String USER_DEFINED_TYPE = "user-defined";
 
   @Test
@@ -64,9 +61,7 @@ public class TestGbaseTypeConverter {
     checkJdbcTypeToGravitinoType(Types.StringType.get(), TEXT, null, null);
     checkJdbcTypeToGravitinoType(Types.BinaryType.get(), BLOB, null, null);
     checkJdbcTypeToGravitinoType(Types.BinaryType.get(), LONGBLOB, null, null);
-    checkJdbcTypeToGravitinoType(Types.TimestampType.withTimeZone(), TIMESTAMP,
-        null,
-        null);
+    checkJdbcTypeToGravitinoType(Types.TimestampType.withTimeZone(), TIMESTAMP, null, null);
     checkJdbcTypeToGravitinoType(Types.TimeType.get(), TIME, null, null);
     checkJdbcTypeToGravitinoType(Types.DateType.get(), DATE, null, null);
     checkJdbcTypeToGravitinoType(Types.TimestampType.withoutTimeZone(), DATETIME, null, null);

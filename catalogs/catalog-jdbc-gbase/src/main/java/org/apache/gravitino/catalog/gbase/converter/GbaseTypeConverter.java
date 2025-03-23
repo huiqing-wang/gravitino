@@ -22,9 +22,7 @@ import org.apache.gravitino.catalog.jdbc.converter.JdbcTypeConverter;
 import org.apache.gravitino.rel.types.Type;
 import org.apache.gravitino.rel.types.Types;
 
-/**
- * Type converter for Gbase.
- */
+/** Type converter for Gbase. */
 public class GbaseTypeConverter extends JdbcTypeConverter {
 
   static final String TINYINT = "TINYINT";
@@ -129,7 +127,6 @@ public class GbaseTypeConverter extends JdbcTypeConverter {
       return ((Types.ExternalType) type).catalogString();
     }
     throw new IllegalArgumentException(
-        String.format(
-            "Couldn't convert Gravitino type %s to Gbase type", type.simpleString()));
+        String.format("Couldn't convert Gravitino type %s to Gbase type", type.simpleString()));
   }
 }

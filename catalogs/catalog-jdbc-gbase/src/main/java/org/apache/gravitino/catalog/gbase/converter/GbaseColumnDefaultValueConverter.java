@@ -34,6 +34,9 @@ import static org.apache.gravitino.catalog.gbase.converter.GbaseTypeConverter.VA
 import static org.apache.gravitino.rel.Column.DEFAULT_VALUE_NOT_SET;
 import static org.apache.gravitino.rel.Column.DEFAULT_VALUE_OF_CURRENT_TIMESTAMP;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import org.apache.gravitino.catalog.jdbc.converter.JdbcColumnDefaultValueConverter;
 import org.apache.gravitino.catalog.jdbc.converter.JdbcTypeConverter;
 import org.apache.gravitino.rel.expressions.Expression;
@@ -45,12 +48,7 @@ import org.apache.gravitino.rel.types.Decimal;
 import org.apache.gravitino.rel.types.Type;
 import org.apache.gravitino.rel.types.Types;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 public class GbaseColumnDefaultValueConverter extends JdbcColumnDefaultValueConverter {
-
 
   public String fromGravitino(Expression defaultValue) {
     if (DEFAULT_VALUE_NOT_SET.equals(defaultValue)) {
@@ -82,9 +80,12 @@ public class GbaseColumnDefaultValueConverter extends JdbcColumnDefaultValueConv
   }
 
   @Override
-  public Expression toGravitino(JdbcTypeConverter.JdbcTypeBean type, String columnDefaultValue,
-      boolean isExpression, boolean nullable) {
-    //Gbase don't support col expression
+  public Expression toGravitino(
+      JdbcTypeConverter.JdbcTypeBean type,
+      String columnDefaultValue,
+      boolean isExpression,
+      boolean nullable) {
+    // Gbase don't support col expression
     if (columnDefaultValue == null || columnDefaultValue.isEmpty()) {
       return nullable ? Literals.NULL : DEFAULT_VALUE_NOT_SET;
     }
@@ -98,8 +99,10 @@ public class GbaseColumnDefaultValueConverter extends JdbcColumnDefaultValueConv
     }
 
     // need exclude begin and end "'"
-    String reallyValue = columnDefaultValue.startsWith("'") ? columnDefaultValue.substring(1,
-        columnDefaultValue.length() - 1) : columnDefaultValue;
+    String reallyValue =
+        columnDefaultValue.startsWith("'")
+            ? columnDefaultValue.substring(1, columnDefaultValue.length() - 1)
+            : columnDefaultValue;
 
     try {
       switch (reallyType) {

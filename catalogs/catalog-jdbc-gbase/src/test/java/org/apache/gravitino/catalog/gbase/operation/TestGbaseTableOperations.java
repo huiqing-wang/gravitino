@@ -18,7 +18,11 @@
  */
 package org.apache.gravitino.catalog.gbase.operation;
 
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.gravitino.catalog.jdbc.JdbcColumn;
 import org.apache.gravitino.catalog.jdbc.JdbcTable;
 import org.apache.gravitino.rel.expressions.distributions.Distributions;
@@ -30,12 +34,6 @@ import org.apache.gravitino.rel.types.Types;
 import org.apache.gravitino.utils.RandomNameUtils;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Tag("gravitino-docker-test")
 public class TestGbaseTableOperations extends TestGbase {
@@ -85,12 +83,12 @@ public class TestGbaseTableOperations extends TestGbase {
             .withType(Types.DateType.get())
             .withNullable(true)
             .build());
-        columns.add(
-            JdbcColumn.builder()
-                .withName("col_8")
-                .withType(Types.TimeType.get())
-                .withNullable(false)
-                .build());
+    columns.add(
+        JdbcColumn.builder()
+            .withName("col_8")
+            .withType(Types.TimeType.get())
+            .withNullable(false)
+            .build());
     columns.add(
         JdbcColumn.builder()
             .withName("COL_9")
@@ -119,8 +117,11 @@ public class TestGbaseTableOperations extends TestGbase {
     columns.add(
         JdbcColumn.builder().withName("COL_10").withType(Types.DecimalType.of(10, 2)).build());
     columns.add(
-        JdbcColumn.builder().withName("COL_11").withType(Types.VarCharType.of(500))
-            .withNullable(true).build());
+        JdbcColumn.builder()
+            .withName("COL_11")
+            .withType(Types.VarCharType.of(500))
+            .withNullable(true)
+            .build());
     columns.add(
         JdbcColumn.builder()
             .withName("COL_12")
@@ -167,10 +168,7 @@ public class TestGbaseTableOperations extends TestGbase {
             .build());
 
     // Test create increment key for unique index.
-    Index[] indexes =
-        new Index[]{
-            Indexes.primary("PK_COL_1", new String[][]{{"col_1"}})
-        };
+    Index[] indexes = new Index[] {Indexes.primary("PK_COL_1", new String[][] {{"col_1"}})};
 
     Map<String, String> properties = new HashMap<>();
     String comment = null;
@@ -191,13 +189,7 @@ public class TestGbaseTableOperations extends TestGbase {
     JdbcTable load = TABLE_OPERATIONS.load(TEST_DB_NAME.toString(), tableName);
 
     assertionsTableInfo(
-        tableName,
-        "",
-        columns,
-        Collections.emptyMap(),
-        null,
-        Transforms.EMPTY_TRANSFORM,
-        load);
+        tableName, "", columns, Collections.emptyMap(), null, Transforms.EMPTY_TRANSFORM, load);
   }
 
   @Test

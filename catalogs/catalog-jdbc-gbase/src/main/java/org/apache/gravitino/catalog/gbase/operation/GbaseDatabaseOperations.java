@@ -19,24 +19,16 @@
 package org.apache.gravitino.catalog.gbase.operation;
 
 import com.google.common.collect.ImmutableSet;
-
-import org.apache.commons.collections4.MapUtils;
-import org.apache.gravitino.catalog.jdbc.operation.JdbcDatabaseOperations;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.gravitino.catalog.jdbc.operation.JdbcDatabaseOperations;
 
-/**
- * Database operations for Gbase.
- */
+/** Database operations for Gbase. */
 public class GbaseDatabaseOperations extends JdbcDatabaseOperations {
 
   @Override
@@ -46,8 +38,8 @@ public class GbaseDatabaseOperations extends JdbcDatabaseOperations {
 
   @Override
   protected Set<String> createSysDatabaseNameSet() {
-    return ImmutableSet.of("information_schema", "performance_schema", "gbase", "gclusterdb",
-        "gctmpdb");
+    return ImmutableSet.of(
+        "information_schema", "performance_schema", "gbase", "gclusterdb", "gctmpdb");
   }
 
   @Override

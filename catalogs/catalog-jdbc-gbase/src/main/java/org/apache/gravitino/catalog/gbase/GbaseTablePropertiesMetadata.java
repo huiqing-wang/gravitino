@@ -20,12 +20,11 @@ package org.apache.gravitino.catalog.gbase;
 
 import static org.apache.gravitino.connector.PropertyEntry.stringReservedPropertyEntry;
 
-import org.apache.gravitino.catalog.jdbc.JdbcTablePropertiesMetadata;
-import org.apache.gravitino.connector.PropertyEntry;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.gravitino.catalog.jdbc.JdbcTablePropertiesMetadata;
+import org.apache.gravitino.connector.PropertyEntry;
 
 public class GbaseTablePropertiesMetadata extends JdbcTablePropertiesMetadata {
 
@@ -42,5 +41,4 @@ public class GbaseTablePropertiesMetadata extends JdbcTablePropertiesMetadata {
   protected Map<String, PropertyEntry<?>> specificPropertyEntries() {
     return PROPERTIES_METADATA;
   }
-
 }

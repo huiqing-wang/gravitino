@@ -21,7 +21,11 @@ package org.apache.gravitino.catalog.gbase.operation;
 import static org.apache.gravitino.rel.Column.DEFAULT_VALUE_NOT_SET;
 
 import com.google.common.base.Preconditions;
-
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -36,17 +40,8 @@ import org.apache.gravitino.rel.expressions.sorts.SortOrder;
 import org.apache.gravitino.rel.expressions.transforms.Transform;
 import org.apache.gravitino.rel.indexes.Index;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-/**
- * Table operations for Gbase.
- */
+/** Table operations for Gbase. */
 public class GbaseTableOperations extends JdbcTableOperations {
-
 
   @Override
   public void create(
@@ -113,18 +108,12 @@ public class GbaseTableOperations extends JdbcTableOperations {
 
     validateIncrementCol(columns, indexes);
     StringBuilder sqlBuilder = new StringBuilder();
-    sqlBuilder
-        .append("CREATE TABLE ")
-        .append(tableName)
-        .append(" (\n");
+    sqlBuilder.append("CREATE TABLE ").append(tableName).append(" (\n");
 
     // Add columns
     for (int i = 0; i < columns.length; i++) {
       JdbcColumn column = columns[i];
-      sqlBuilder
-          .append(SPACE)
-          .append(SPACE)
-          .append(column.name());
+      sqlBuilder.append(SPACE).append(SPACE).append(column.name());
 
       appendColumnDefinition(column, sqlBuilder);
       // Add a comma for the next column, unless it's the last one
@@ -167,8 +156,7 @@ public class GbaseTableOperations extends JdbcTableOperations {
       sqlBuilder.append(",\n");
       switch (index.type()) {
         case PRIMARY_KEY:
-          sqlBuilder.append("PRIMARY KEY ")
-              .append("(").append(fieldStr).append(")");
+          sqlBuilder.append("PRIMARY KEY ").append("(").append(fieldStr).append(")");
           break;
         default:
           throw new IllegalArgumentException(
@@ -197,11 +185,10 @@ public class GbaseTableOperations extends JdbcTableOperations {
   }
 
   @Override
-  protected String generateAlterTableSql(String databaseName, String tableName,
-      TableChange... changes) {
+  protected String generateAlterTableSql(
+      String databaseName, String tableName, TableChange... changes) {
     throw new UnsupportedOperationException("alter table is not supported");
   }
-
 
   private StringBuilder appendColumnDefinition(JdbcColumn column, StringBuilder sqlBuilder) {
     // Add data type
@@ -233,6 +220,4 @@ public class GbaseTableOperations extends JdbcTableOperations {
     }
     return sqlBuilder;
   }
-
-
 }

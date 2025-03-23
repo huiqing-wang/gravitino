@@ -177,7 +177,6 @@ public class PhoenixTypeConverter extends JdbcTypeConverter {
       return ((Types.ExternalType) type).catalogString();
     }
     throw new IllegalArgumentException(
-        String.format(
-            "Couldn't convert Gravitino type %s to Phoenix type", type.simpleString()));
+        String.format("Couldn't convert Gravitino type %s to Phoenix type", type.simpleString()));
   }
 }

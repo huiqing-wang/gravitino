@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- description = "catalog-jdbc-gbase"
+description = "catalog-jdbc-gbase"
 
 plugins {
   `maven-publish`
@@ -107,7 +107,7 @@ tasks.test {
 //    // Exclude integration tests
 //    exclude("**/integration/test/**")
 //  } else {
-    dependsOn(tasks.jar)
+  dependsOn(tasks.jar)
 //  }
 }
 

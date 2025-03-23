@@ -18,18 +18,15 @@
  */
 package org.apache.gravitino.catalog.gbase.converter;
 
+import java.sql.SQLException;
 import org.apache.gravitino.catalog.jdbc.converter.JdbcExceptionConverter;
 import org.apache.gravitino.exceptions.GravitinoRuntimeException;
 import org.apache.gravitino.exceptions.NoSuchSchemaException;
 
-import java.sql.SQLException;
-
-/**
- * Exception converter to Apache Gravitino exception for Gbase.
- */
+/** Exception converter to Apache Gravitino exception for Gbase. */
 public class GbaseExceptionConverter extends JdbcExceptionConverter {
 
-  //java.sql.SQLException: Can't drop database 'xxxx'; database doesn't exist
+  // java.sql.SQLException: Can't drop database 'xxxx'; database doesn't exist
   static final int DATABASE_NOT_EXIST = 1008;
 
   @SuppressWarnings("FormatStringAnnotation")
@@ -42,6 +39,5 @@ public class GbaseExceptionConverter extends JdbcExceptionConverter {
       default:
         return new GravitinoRuntimeException(sqlException, sqlException.getMessage());
     }
-
   }
 }

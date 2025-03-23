@@ -18,14 +18,13 @@
  */
 package org.apache.gravitino.catalog.gbase.operation;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.gravitino.utils.RandomNameUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Tag("gravitino-docker-test")
 public class TestGbaseDatabaseOperations extends TestGbase {
@@ -39,8 +38,7 @@ public class TestGbaseDatabaseOperations extends TestGbase {
     ((GbaseDatabaseOperations) DATABASE_OPERATIONS)
         .createSysDatabaseNameSet()
         .forEach(
-            phoneixDatabaseName ->
-                Assertions.assertFalse(databases.contains(phoneixDatabaseName)));
+            phoneixDatabaseName -> Assertions.assertFalse(databases.contains(phoneixDatabaseName)));
     testBaseOperation(databaseName, properties, comment);
 
     testDropDatabase(databaseName);

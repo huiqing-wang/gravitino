@@ -19,7 +19,10 @@
 package org.apache.gravitino.catalog.gbase.operation;
 
 import com.google.common.collect.Maps;
-
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Map;
+import javax.sql.DataSource;
 import org.apache.gravitino.catalog.gbase.converter.GbaseColumnDefaultValueConverter;
 import org.apache.gravitino.catalog.gbase.converter.GbaseExceptionConverter;
 import org.apache.gravitino.catalog.gbase.converter.GbaseTypeConverter;
@@ -29,15 +32,10 @@ import org.apache.gravitino.catalog.jdbc.utils.DataSourceUtils;
 import org.apache.gravitino.integration.test.util.TestDatabaseName;
 import org.junit.jupiter.api.BeforeAll;
 
-import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Map;
-import javax.sql.DataSource;
-
 public class TestGbase extends TestJdbc {
 
   protected static TestDatabaseName TEST_DB_NAME;
-private static final String JDBC_URL = "jdbc:gbase://localhost:5258";
+  private static final String JDBC_URL = "jdbc:gbase://localhost:5258";
   private static final String JDBC_DRIVER = "com.gbase.jdbc.Driver";
   private static final String USERNAME = "root";
   private static final String PASSWORD = "root";
@@ -65,12 +63,11 @@ private static final String JDBC_URL = "jdbc:gbase://localhost:5258";
     Map<String, String> catalogProperties = Maps.newHashMap();
 
     catalogProperties.put(JdbcConfig.JDBC_URL.getKey(), JDBC_URL);
-    catalogProperties.put(
-        JdbcConfig.JDBC_DRIVER.getKey(), JDBC_DRIVER);
+    catalogProperties.put(JdbcConfig.JDBC_DRIVER.getKey(), JDBC_DRIVER);
     catalogProperties.put(JdbcConfig.USERNAME.getKey(), USERNAME);
     catalogProperties.put(JdbcConfig.PASSWORD.getKey(), PASSWORD);
 
-//    catalogProperties.put("gbase.schema.isNamespaceMappingEnabled", "true");
+    //    catalogProperties.put("gbase.schema.isNamespaceMappingEnabled", "true");
 
     return catalogProperties;
   }
