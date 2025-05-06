@@ -46,6 +46,7 @@ dependencies {
   implementation(libs.jettison)
   implementation(libs.rome)
   implementation(libs.rome)
+  implementation(libs.httpclient5)
   compileOnly(libs.lombok)
 
   testImplementation(project(":core"))
