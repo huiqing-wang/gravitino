@@ -324,7 +324,7 @@ public final class JettyServer {
     HttpConfiguration httpConfig = new HttpConfiguration();
     httpConfig.setRequestHeaderSize(reqHeaderSize);
     httpConfig.setResponseHeaderSize(respHeaderSize);
-    httpConfig.setSendServerVersion(true);
+    httpConfig.setSendServerVersion(false);
     httpConfig.setIdleTimeout(idleTimeout);
 
     HttpConnectionFactory httpConnectionFactory = new HttpConnectionFactory(httpConfig);
@@ -367,7 +367,7 @@ public final class JettyServer {
     httpConfig.setSecureScheme(HTTPS);
     httpConfig.setRequestHeaderSize(reqHeaderSize);
     httpConfig.setResponseHeaderSize(respHeaderSize);
-    httpConfig.setSendServerVersion(true);
+    httpConfig.setSendServerVersion(false);
     httpConfig.setIdleTimeout(idleTimeout);
     httpConfig.setSecurePort(port);
 
