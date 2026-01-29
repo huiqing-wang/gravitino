@@ -56,6 +56,7 @@ public class UserEntity implements User, Entity, Auditable, HasIdentifier {
   private List<String> roleNames;
   private List<Long> roleIds;
   private Namespace namespace;
+  private String password;
 
   private UserEntity() {}
 
@@ -84,6 +85,11 @@ public class UserEntity implements User, Entity, Auditable, HasIdentifier {
   @Override
   public String name() {
     return name;
+  }
+
+  @Override
+  public String password() {
+    return password;
   }
 
   /**
@@ -203,6 +209,11 @@ public class UserEntity implements User, Entity, Auditable, HasIdentifier {
      */
     public Builder withName(String name) {
       userEntity.name = name;
+      return this;
+    }
+
+    public Builder withPassword(String password) {
+      userEntity.password = password;
       return this;
     }
 

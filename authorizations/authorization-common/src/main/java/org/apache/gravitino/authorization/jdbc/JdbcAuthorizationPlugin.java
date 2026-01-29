@@ -227,7 +227,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
 
   @Override
   public Boolean onUserAdded(User user) throws AuthorizationPluginException {
-    List<String> sqls = getCreateUserSQL(user.name());
+    List<String> sqls = getCreateUserSQL(user.name(), user.password());
     for (String sql : sqls) {
       executeUpdateSQL(sql);
     }
@@ -251,7 +251,7 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
   @Override
   public Boolean onGroupAdded(Group group) throws AuthorizationPluginException {
     String name = String.format("%s%s", GROUP_PREFIX, group.name());
-    List<String> sqls = getCreateUserSQL(name);
+    List<String> sqls = getCreateUserSQL(name, null);
     for (String sql : sqls) {
       executeUpdateSQL(sql);
     }
@@ -308,8 +308,8 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
   }
 
   @Override
-  public List<String> getCreateUserSQL(String username) {
-    return Lists.newArrayList(String.format("CREATE USER %s", username));
+  public List<String> getCreateUserSQL(String username, String password) {
+    return Lists.newArrayList(String.format("CREATE USER %s PASSWORD %s", username, password));
   }
 
   @Override

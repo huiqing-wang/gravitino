@@ -34,7 +34,7 @@ public class PostgresqlJdbcAuthorizationPlugin extends JdbcAuthorizationPlugin {
   }
 
   @Override
-  public List<String> getCreateUserSQL(String username) {
+  public List<String> getCreateUserSQL(String username, String password) {
     return Lists.newArrayList(String.format("CREATE USER %s", username));
   }
 

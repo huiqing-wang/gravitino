@@ -183,27 +183,29 @@ public class TestAccessControlManager {
 
   @Test
   public void testAddUser() {
-    User user = accessControlManager.addUser(METALAKE, "testAdd");
+    User user = accessControlManager.addUser(METALAKE, "testAdd", null);
     Assertions.assertEquals("testAdd", user.name());
     Assertions.assertTrue(user.roles().isEmpty());
 
-    user = accessControlManager.addUser(METALAKE, "testAddWithOptionalField");
+    user = accessControlManager.addUser(METALAKE, "testAddWithOptionalField", null);
 
     Assertions.assertEquals("testAddWithOptionalField", user.name());
     Assertions.assertTrue(user.roles().isEmpty());
 
     // Test with NoSuchMetalakeException
     Assertions.assertThrows(
-        NoSuchMetalakeException.class, () -> accessControlManager.addUser("no-exist", "testAdd"));
+        NoSuchMetalakeException.class,
+        () -> accessControlManager.addUser("no-exist", "testAdd", null));
 
     // Test with UserAlreadyExistsException
     Assertions.assertThrows(
-        UserAlreadyExistsException.class, () -> accessControlManager.addUser(METALAKE, "testAdd"));
+        UserAlreadyExistsException.class,
+        () -> accessControlManager.addUser(METALAKE, "testAdd", null));
   }
 
   @Test
   public void testGetUser() {
-    accessControlManager.addUser(METALAKE, "testGet");
+    accessControlManager.addUser(METALAKE, "testGet", null);
 
     User user = accessControlManager.getUser(METALAKE, "testGet");
     Assertions.assertEquals("testGet", user.name());
@@ -221,7 +223,7 @@ public class TestAccessControlManager {
 
   @Test
   public void testRemoveUser() {
-    accessControlManager.addUser(METALAKE, "testRemove");
+    accessControlManager.addUser(METALAKE, "testRemove", null);
 
     // Test with NoSuchMetalakeException
     Assertions.assertThrows(
@@ -239,8 +241,8 @@ public class TestAccessControlManager {
 
   @Test
   public void testListUsers() {
-    accessControlManager.addUser("metalake_list", "testList1");
-    accessControlManager.addUser("metalake_list", "testList2");
+    accessControlManager.addUser("metalake_list", "testList1", null);
+    accessControlManager.addUser("metalake_list", "testList2", null);
 
     // Test to list users
     String[] expectUsernames = new String[] {"testList1", "testList2"};

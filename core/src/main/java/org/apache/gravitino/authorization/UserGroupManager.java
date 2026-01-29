@@ -29,6 +29,8 @@ import org.apache.gravitino.Entity;
 import org.apache.gravitino.Entity.EntityType;
 import org.apache.gravitino.EntityAlreadyExistsException;
 import org.apache.gravitino.EntityStore;
+import org.apache.gravitino.MetadataObject;
+import org.apache.gravitino.MetadataObjects;
 import org.apache.gravitino.NameIdentifier;
 import org.apache.gravitino.Namespace;
 import org.apache.gravitino.exceptions.GroupAlreadyExistsException;
@@ -63,13 +65,14 @@ class UserGroupManager {
     this.idGenerator = idGenerator;
   }
 
-  User addUser(String metalake, String name) throws UserAlreadyExistsException {
+  User addUser(String metalake, String name, String password) throws UserAlreadyExistsException {
     try {
       checkMetalake(NameIdentifier.of(metalake), store);
       UserEntity userEntity =
           UserEntity.builder()
               .withId(idGenerator.nextId())
               .withName(name)
+              .withPassword(password)
               .withNamespace(AuthorizationUtils.ofUserNamespace(metalake))
               .withRoleNames(Lists.newArrayList())
               .withAuditInfo(
@@ -79,6 +82,19 @@ class UserGroupManager {
                       .build())
               .build();
       store.put(userEntity, false /* overwritten */);
+
+      LOG.info("addUser userEntity: {}", userEntity.toString());
+      MetadataObject newMetadataObject =
+          MetadataObjects.of(null, metalake, MetadataObject.Type.METALAKE);
+      LOG.info("addUser MetadataObject: {}", newMetadataObject.toString());
+
+      AuthorizationUtils.callAuthorizationPluginForMetadataObject(
+          metalake,
+          newMetadataObject,
+          authorizationPlugin -> {
+            authorizationPlugin.onUserAdded(userEntity);
+          });
+
       return userEntity;
     } catch (EntityAlreadyExistsException e) {
       LOG.warn("User {} in the metalake {} already exists", name, metalake, e);

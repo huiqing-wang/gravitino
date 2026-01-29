@@ -39,6 +39,9 @@ public class UserAddRequest implements RESTRequest {
   @JsonProperty("name")
   private final String name;
 
+  @JsonProperty("password")
+  private String password;
+
   /** Default constructor for UserAddRequest. (Used for Jackson deserialization.) */
   public UserAddRequest() {
     this(null);
@@ -52,6 +55,12 @@ public class UserAddRequest implements RESTRequest {
   public UserAddRequest(String name) {
     super();
     this.name = name;
+  }
+
+  public UserAddRequest(String name, String password) {
+    super();
+    this.name = name;
+    this.password = password;
   }
 
   /**

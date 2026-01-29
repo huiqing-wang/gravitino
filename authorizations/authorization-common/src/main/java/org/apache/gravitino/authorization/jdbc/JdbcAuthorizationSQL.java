@@ -33,7 +33,7 @@ public interface JdbcAuthorizationSQL {
    * @param username the username to create
    * @return the SQL statement list to create a user
    */
-  List<String> getCreateUserSQL(String username);
+  List<String> getCreateUserSQL(String username, String password);
 
   /**
    * Get SQL statements for creating a group.

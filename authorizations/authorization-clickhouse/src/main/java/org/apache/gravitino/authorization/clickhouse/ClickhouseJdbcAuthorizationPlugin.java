@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.gravitino.MetadataObject;
 import org.apache.gravitino.authorization.Owner;
 import org.apache.gravitino.authorization.jdbc.JdbcAuthorizationPlugin;
@@ -35,8 +36,15 @@ public class ClickhouseJdbcAuthorizationPlugin extends JdbcAuthorizationPlugin {
   }
 
   @Override
-  public List<String> getCreateUserSQL(String username) {
-    return Lists.newArrayList(String.format("CREATE USER IF NOT EXISTS %s", username));
+  public List<String> getCreateUserSQL(String username, String password) {
+    if (StringUtils.isEmpty(password)) {
+      return Lists.newArrayList(String.format("CREATE USER IF NOT EXISTS %s", username));
+    } else {
+      return Lists.newArrayList(
+          String.format(
+              "CREATE USER IF NOT EXISTS %s IDENTIFIED WITH plaintext_password BY '%s'",
+              username, password));
+    }
   }
 
   @Override

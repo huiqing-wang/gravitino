@@ -34,6 +34,8 @@ public interface User extends Auditable {
    */
   String name();
 
+  String password();
+
   /**
    * The roles of the user. A user can have multiple roles. Every role binds several privileges.
    *
