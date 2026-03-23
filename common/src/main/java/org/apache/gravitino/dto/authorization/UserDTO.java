@@ -61,11 +61,6 @@ public class UserDTO implements User {
     return name;
   }
 
-  @Override
-  public String password() {
-    return "";
-  }
-
   /**
    * The roles of the user. A user can have multiple roles. Every role binds several privileges.
    *

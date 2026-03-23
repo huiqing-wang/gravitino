@@ -48,7 +48,7 @@ public interface AccessControlDispatcher {
    * @throws NoSuchMetalakeException If the Metalake with the given name does not exist.
    * @throws RuntimeException If adding the User encounters storage issues.
    */
-  User addUser(String metalake, String user, String password)
+  User addUser(String metalake, String user)
       throws UserAlreadyExistsException, NoSuchMetalakeException;
 
   /**

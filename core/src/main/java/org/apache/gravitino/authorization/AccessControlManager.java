@@ -55,9 +55,9 @@ public class AccessControlManager implements AccessControlDispatcher {
   }
 
   @Override
-  public User addUser(String metalake, String user, String password)
+  public User addUser(String metalake, String user)
       throws UserAlreadyExistsException, NoSuchMetalakeException {
-    return userGroupManager.addUser(metalake, user, password);
+    return userGroupManager.addUser(metalake, user);
   }
 
   @Override
