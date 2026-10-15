@@ -29,6 +29,7 @@ dependencies {
   implementation(project(":core"))
   implementation(project(":lineage"))
   implementation(project(":server-common"))
+  implementation(project(":clients:client-java"))
   implementation(libs.bundles.jetty)
   implementation(libs.bundles.jersey)
   implementation(libs.bundles.log4j)

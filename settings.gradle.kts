@@ -50,6 +50,7 @@ include("catalogs:catalog-model")
 include("catalogs-contrib:catalog-jdbc-clickhouse")
 include("catalogs-contrib:catalog-jdbc-hologres")
 include("catalogs-contrib:catalog-jdbc-oceanbase")
+include("catalogs-contrib:gravitino-catalog")
 
 include(
   "clients:client-java",

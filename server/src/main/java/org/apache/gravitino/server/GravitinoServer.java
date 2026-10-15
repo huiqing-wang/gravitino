@@ -57,6 +57,7 @@ import org.apache.gravitino.server.web.JettyServerConfig;
 import org.apache.gravitino.server.web.ObjectMapperProvider;
 import org.apache.gravitino.server.web.RequestContextFilter;
 import org.apache.gravitino.server.web.VersioningFilter;
+import org.apache.gravitino.server.web.federation.FederatedCatalogDispatcher;
 import org.apache.gravitino.server.web.filter.AccessControlNotAllowedFilter;
 import org.apache.gravitino.server.web.filter.GravitinoInterceptionService;
 import org.apache.gravitino.server.web.mapper.JsonMappingExceptionMapper;
@@ -143,7 +144,10 @@ public class GravitinoServer extends ResourceConfig {
                   .in(Singleton.class);
             }
             bind(gravitinoEnv.metalakeDispatcher()).to(MetalakeDispatcher.class).ranked(1);
-            bind(gravitinoEnv.catalogDispatcher()).to(CatalogDispatcher.class).ranked(1);
+            bind(new FederatedCatalogDispatcher(
+                    gravitinoEnv.catalogDispatcher(), gravitinoEnv.metalakeDispatcher()))
+                .to(CatalogDispatcher.class)
+                .ranked(1);
             bind(gravitinoEnv.schemaDispatcher()).to(SchemaDispatcher.class).ranked(1);
             bind(gravitinoEnv.tableDispatcher()).to(TableDispatcher.class).ranked(1);
             bind(gravitinoEnv.viewDispatcher()).to(ViewDispatcher.class).ranked(1);

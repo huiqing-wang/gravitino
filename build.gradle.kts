@@ -1131,6 +1131,7 @@ tasks {
         !it.name.startsWith("trino-connector") &&
         it.name != "hadoop-common" &&
         it.name != "integration-test" &&
+        it.name != "gravitino-catalog" &&
         it.parent?.name != "bundles" &&
         it.parent?.name != "maintenance" &&
         it.parent?.name != "plugins" &&
@@ -1179,6 +1180,7 @@ tasks {
         it.name != "hive-metastore3-libs" &&
         !it.name.startsWith("optimizer") &&
         it.name != "hive-metastore-common" &&
+        it.name != "gravitino-catalog" &&
         it.name != "docs" &&
         it.name != "hadoop-common" &&
         it.name != "web" &&
@@ -1218,7 +1220,8 @@ tasks {
       ":catalogs:catalog-lakehouse-generic:copyLibAndConfig",
       ":catalogs-contrib:catalog-jdbc-hologres:copyLibAndConfig",
       ":catalogs-contrib:catalog-jdbc-oceanbase:copyLibAndConfig",
-      ":catalogs-contrib:catalog-jdbc-clickhouse:copyLibAndConfig"
+      ":catalogs-contrib:catalog-jdbc-clickhouse:copyLibAndConfig",
+      ":catalogs-contrib:gravitino-catalog:copyLibAndConfig"
     )
   }
 

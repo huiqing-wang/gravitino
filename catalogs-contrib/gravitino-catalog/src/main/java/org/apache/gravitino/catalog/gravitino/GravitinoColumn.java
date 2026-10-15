@@ -1,0 +1,56 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.gravitino.catalog.gravitino;
+
+import lombok.EqualsAndHashCode;
+import org.apache.gravitino.connector.BaseColumn;
+
+/** Represents a column entity from a remote Gravitino instance. */
+@EqualsAndHashCode(callSuper = true)
+public class GravitinoColumn extends BaseColumn {
+
+  private GravitinoColumn() {}
+
+  /** A builder class for constructing GravitinoColumn instances. */
+  public static class Builder extends BaseColumnBuilder<Builder, GravitinoColumn> {
+
+    private Builder() {}
+
+    @Override
+    protected GravitinoColumn internalBuild() {
+      GravitinoColumn column = new GravitinoColumn();
+      column.name = name;
+      column.comment = comment;
+      column.dataType = dataType;
+      column.nullable = nullable;
+      column.autoIncrement = autoIncrement;
+      column.defaultValue = defaultValue == null ? DEFAULT_VALUE_NOT_SET : defaultValue;
+      return column;
+    }
+  }
+
+  /**
+   * Creates a new instance of {@link Builder}.
+   *
+   * @return The new instance.
+   */
+  public static Builder builder() {
+    return new Builder();
+  }
+}
