@@ -74,6 +74,10 @@ public class S3FileSystemProvider implements FileSystemProvider, SupportsCredent
     // Hadoop-aws 2 does not support IAMInstanceCredentialsProvider
     checkAndSetCredentialProvider(configuration);
 
+    FileSystem fs = S3AFileSystem.get(path.toUri(), configuration);
+    if (fs != null) {
+      return fs;
+    }
     return S3AFileSystem.newInstance(path.toUri(), configuration);
   }
 

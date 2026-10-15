@@ -102,6 +102,40 @@ public class PermissionOperations {
   }
 
   @PUT
+  @Path("users/{user}/grant2/")
+  @Produces("application/vnd.gravitino.v1+json")
+  @Timed(name = "grant-roles-to-user." + MetricNames.HTTP_PROCESS_DURATION, absolute = true)
+  @ResponseMetered(name = "grant-roles-to-user", absolute = true)
+  public Response grantRolesToUser2(
+      @PathParam("metalake") String metalake,
+      @PathParam("user") String user,
+      RoleGrantRequest request) {
+    try {
+      return Utils.doAs(
+          httpRequest,
+          () ->
+              TreeLockUtils.doWithTreeLock(
+                  AuthorizationUtils.ofUser(metalake, user),
+                  LockType.WRITE,
+                  () ->
+                      TreeLockUtils.doWithTreeLock(
+                          NameIdentifier.of(AuthorizationUtils.ofRoleNamespace(metalake).levels()),
+                          LockType.READ,
+                          () -> {
+                            request.validate();
+                            return Utils.ok(
+                                new UserResponse(
+                                    DTOConverters.toDTO(
+                                        accessControlManager.grantRolesToUser2(
+                                            metalake, request.getRoleNames(), user))));
+                          })));
+    } catch (Exception e) {
+      return ExceptionHandlers.handleUserPermissionOperationException(
+          OperationType.GRANT, StringUtils.join(request.getRoleNames(), ","), user, e);
+    }
+  }
+
+  @PUT
   @Path("groups/{group}/grant/")
   @Produces("application/vnd.gravitino.v1+json")
   @Timed(name = "grant-roles-to-group." + MetricNames.HTTP_PROCESS_DURATION, absolute = true)

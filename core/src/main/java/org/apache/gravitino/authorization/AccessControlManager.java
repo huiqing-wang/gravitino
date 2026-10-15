@@ -114,6 +114,12 @@ public class AccessControlManager implements AccessControlDispatcher {
   }
 
   @Override
+  public User grantRolesToUser2(String metalake, List<String> roles, String user)
+      throws NoSuchUserException, IllegalRoleException, NoSuchMetalakeException {
+    return permissionManager.grantRolesToUser2(metalake, roles, user);
+  }
+
+  @Override
   public Group grantRolesToGroup(String metalake, List<String> roles, String group)
       throws NoSuchGroupException, IllegalRoleException, NoSuchMetalakeException {
     return permissionManager.grantRolesToGroup(metalake, roles, group);
@@ -172,7 +178,12 @@ public class AccessControlManager implements AccessControlDispatcher {
   public Role grantPrivilegeToRole(
       String metalake, String role, MetadataObject object, Set<Privilege> privileges)
       throws NoSuchRoleException, NoSuchMetalakeException {
-    return permissionManager.grantPrivilegesToRole(metalake, role, object, privileges);
+    String[] roles = role.split("\\.");
+    if (roles.length == 1) {
+      return permissionManager.grantPrivilegesToRole(metalake, role, object, privileges);
+    } else {
+      return permissionManager.grantPrivilegesToRole2(metalake, role, object, privileges);
+    }
   }
 
   @Override

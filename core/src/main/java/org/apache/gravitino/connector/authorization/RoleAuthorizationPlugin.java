@@ -83,6 +83,9 @@ interface RoleAuthorizationPlugin {
    */
   Boolean onGrantedRolesToUser(List<Role> roles, User user) throws AuthorizationPluginException;
 
+  Boolean onGrantedRolesToUser(List<Role> roles, User user, boolean isCreate)
+      throws AuthorizationPluginException;
+
   /**
    * After revoking roles from a user from Gravitino, this method is called to revoke roles from the
    * user in the underlying system. <br>

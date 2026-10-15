@@ -179,6 +179,18 @@ public abstract class JdbcAuthorizationPlugin implements AuthorizationPlugin, Jd
   }
 
   @Override
+  public Boolean onGrantedRolesToUser(List<Role> roles, User user, boolean isCreate)
+      throws AuthorizationPluginException {
+
+    LOG.info("wanghq: {}", user.toString());
+
+    // If the user does not exist, then create it.
+    onUserAdded(user);
+
+    return onGrantedRolesToUser(roles, user);
+  }
+
+  @Override
   public Boolean onRevokedRolesFromUser(List<Role> roles, User user)
       throws AuthorizationPluginException {
 

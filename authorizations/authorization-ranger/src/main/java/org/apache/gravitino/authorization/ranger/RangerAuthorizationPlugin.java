@@ -584,6 +584,10 @@ public abstract class RangerAuthorizationPlugin
     return Boolean.TRUE;
   }
 
+  public Boolean onGrantedRolesToUser(List<Role> roles, User user, boolean isCreate) {
+    return Boolean.TRUE;
+  }
+
   /**
    * Revoke the roles from the user. <br>
    * 1. Create a user in the Ranger if the user does not exist. <br>

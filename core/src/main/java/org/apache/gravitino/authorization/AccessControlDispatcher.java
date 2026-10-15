@@ -164,6 +164,9 @@ public interface AccessControlDispatcher {
   User grantRolesToUser(String metalake, List<String> roles, String user)
       throws NoSuchUserException, IllegalRoleException, NoSuchMetalakeException;
 
+  User grantRolesToUser2(String metalake, List<String> roles, String user)
+      throws NoSuchUserException, IllegalRoleException, NoSuchMetalakeException;
+
   /**
    * Grant roles to a group.
    *

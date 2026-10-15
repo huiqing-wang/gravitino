@@ -60,8 +60,26 @@ public class ClickhouseJdbcAuthorizationPlugin extends JdbcAuthorizationPlugin {
     if (JdbcPrivilege.USAGE.getName().equals(privilege)) {
       return Lists.newArrayList();
     } else {
-      return Lists.newArrayList(
-          String.format("GRANT %s ON %s TO %s", privilege, objectName, roleName));
+      if (JdbcPrivilege.ALTER.getName().equals(privilege)) {
+        privilege = String.format("%s,TRUNCATE,DROP TABLE", privilege);
+      }
+
+      String[] roles = roleName.split("\\.");
+      if (roles.length == 1) {
+        return Lists.newArrayList(
+            String.format("GRANT %s ON %s TO %s", privilege, objectName, roles[0]));
+      } else {
+        if (JdbcPrivilege.CREATE.getName().equals(privilege)) {
+          return Lists.newArrayList(
+              String.format("GRANT REMOTE ON *.* TO %s ON CLUSTER %s", roles[1], roles[0]),
+              String.format(
+                  "GRANT %s ON %s TO %s ON CLUSTER %s", privilege, objectName, roles[1], roles[0]));
+        } else {
+          return Lists.newArrayList(
+              String.format(
+                  "GRANT %s ON %s TO %s ON CLUSTER %s", privilege, objectName, roles[1], roles[0]));
+        }
+      }
     }
   }
 

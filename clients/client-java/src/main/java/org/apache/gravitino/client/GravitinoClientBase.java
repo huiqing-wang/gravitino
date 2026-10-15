@@ -77,6 +77,7 @@ public abstract class GravitinoClientBase implements Closeable {
               .withObjectMapper(mapper)
               .withPreConnectHandler(this::checkVersion)
               .withHeaders(headers)
+              .withHttpClientConfig(HTTPClientConfig.loadConfig())
               .build();
 
     } else {
@@ -86,6 +87,7 @@ public abstract class GravitinoClientBase implements Closeable {
               .withAuthDataProvider(authDataProvider)
               .withObjectMapper(mapper)
               .withHeaders(headers)
+              .withHttpClientConfig(HTTPClientConfig.loadConfig())
               .build();
     }
   }

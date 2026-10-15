@@ -133,6 +133,12 @@ public class ChainedAuthorizationPlugin implements AuthorizationPlugin {
   }
 
   @Override
+  public Boolean onGrantedRolesToUser(List<Role> roles, User user, boolean isCreate)
+      throws AuthorizationPluginException {
+    return chainedAction(plugin -> plugin.onGrantedRolesToUser(roles, user, isCreate));
+  }
+
+  @Override
   public Boolean onRevokedRolesFromUser(List<Role> roles, User user)
       throws AuthorizationPluginException {
     return chainedAction(plugin -> plugin.onRevokedRolesFromUser(roles, user));

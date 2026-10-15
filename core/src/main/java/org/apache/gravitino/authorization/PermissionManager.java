@@ -26,6 +26,7 @@ import static org.apache.gravitino.authorization.AuthorizationUtils.filterSecura
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -146,6 +147,43 @@ class PermissionManager {
           metalake,
           ioe);
       throw new RuntimeException(ioe);
+    }
+  }
+
+  User grantRolesToUser2(String metalake, List<String> roles, String user) {
+    try {
+      List<RoleEntity> roleEntitiesToGrant = Lists.newArrayList();
+      for (String role : roles) {
+        roleEntitiesToGrant.add(roleManager.getRole(metalake, role));
+      }
+
+      List<SecurableObject> securableObjects = Lists.newArrayList();
+
+      for (Role grantedRole : roleEntitiesToGrant) {
+        securableObjects.addAll(grantedRole.securableObjects());
+      }
+
+      User updatedUser = UserEntity.builder().withName(user).build();
+
+      LOG.info("wanghq 开始调用onGrantedRolesToUser");
+
+      AuthorizationUtils.callAuthorizationPluginForSecurableObjects(
+          metalake,
+          securableObjects,
+          (authorizationPlugin, catalogName) ->
+              authorizationPlugin.onGrantedRolesToUser(
+                  roleEntitiesToGrant.stream()
+                      .map(roleEntity -> filterSecurableObjects(roleEntity, metalake, catalogName))
+                      .collect(Collectors.toList()),
+                  updatedUser,
+                  true));
+
+      return updatedUser;
+    } catch (NoSuchEntityException nse) {
+      LOG.warn("Failed to grant, user {} does not exist in the metalake {}", user, metalake, nse);
+      throw new NoSuchUserException(USER_DOES_NOT_EXIST_MSG, user, metalake);
+    } catch (NoSuchRoleException nsr) {
+      throw new IllegalRoleException(nsr);
     }
   }
 
@@ -469,6 +507,79 @@ class PermissionManager {
     } catch (IOException ioe) {
       LOG.error("Grant privileges to {} failed due to storage issues", role, ioe);
       throw new RuntimeException(ioe);
+    }
+  }
+
+  Role grantPrivilegesToRole2(
+      String metalake, String role, MetadataObject object, Set<Privilege> privileges) {
+    try {
+      AuthorizationPluginCallbackWrapper authorizationPluginCallbackWrapper =
+          new AuthorizationPluginCallbackWrapper();
+
+
+      List<SecurableObject> grantedSecurableObjects =
+          generateNewSecurableObjects(
+              Collections.emptyList(), // 新角色，初始无权限
+              object,
+              targetObject -> {
+                if (targetObject == null) {
+                  return createNewSecurableObject(
+                      metalake, role, object, privileges, null, authorizationPluginCallbackWrapper);
+                } else {
+                  return updateGrantedSecurableObject(
+                      metalake,
+                      role,
+                      object,
+                      privileges,
+                      null,
+                      targetObject,
+                      authorizationPluginCallbackWrapper);
+                }
+              });
+
+      AuditInfo auditInfo =
+          AuditInfo.builder()
+              .withCreator(PrincipalUtils.getCurrentPrincipal().getName())
+              .withCreateTime(Instant.now())
+              .withLastModifier(PrincipalUtils.getCurrentPrincipal().getName())
+              .withLastModifiedTime(Instant.now())
+              .build();
+
+      LOG.info("wanghq: 1111111");
+
+      RoleEntity roleEntity =
+          RoleEntity.builder()
+              .withId(1L)
+              .withName(role)
+              .withNamespace(AuthorizationUtils.ofRoleNamespace(metalake))
+              .withAuditInfo(auditInfo)
+              .withSecurableObjects(grantedSecurableObjects)
+              .build();
+
+      AuthorizationUtils.checkDuplicatedNamePrivilege(privileges);
+      SecurableObject securableObject =
+          SecurableObjects.parse(object.fullName(), object.type(), Lists.newArrayList(privileges));
+
+      authorizationPluginCallbackWrapper.setCallback(
+          () ->
+              AuthorizationUtils.callAuthorizationPluginForMetadataObject(
+                  metalake,
+                  object,
+                  authorizationPlugin -> {
+                    authorizationPlugin.onRoleUpdated(
+                        roleEntity, RoleChange.addSecurableObject(role, securableObject));
+                  }));
+
+      LOG.info("wanghq: execute start..");
+      authorizationPluginCallbackWrapper.execute();
+
+      LOG.info("wanghq: {}", roleEntity.toString());
+
+      return roleEntity;
+
+    } catch (NoSuchEntityException nse) {
+      LOG.error("Failed to grant, role {} does not exist in the metalake {}", role, metalake, nse);
+      throw new NoSuchRoleException(ROLE_DOES_NOT_EXIST_MSG, role, metalake);
     }
   }
 

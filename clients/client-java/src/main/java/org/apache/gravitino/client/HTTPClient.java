@@ -43,6 +43,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpHeaders;
@@ -103,7 +104,8 @@ public class HTTPClient implements RESTClient {
       Map<String, String> baseHeaders,
       ObjectMapper objectMapper,
       AuthDataProvider authDataProvider,
-      Runnable beforeConnectHandler) {
+      Runnable beforeConnectHandler,
+      HTTPClientConfig config) {
     this.uri = uri;
     this.mapper = objectMapper;
 
@@ -114,6 +116,14 @@ public class HTTPClient implements RESTClient {
           baseHeaders.entrySet().stream()
               .map(e -> new BasicHeader(e.getKey(), e.getValue()))
               .collect(Collectors.toList()));
+    }
+
+    if (config != null) {
+      clientBuilder.setConnectionManager(
+          PoolingHttpClientConnectionManagerBuilder.create()
+              .setMaxConnPerRoute(config.getMaxConnPerRoute()) // 每个路由的最大连接数
+              .setMaxConnTotal(config.getMaxConnTotal()) // 总最大连接数
+              .build());
     }
 
     this.httpClient = clientBuilder.build();
@@ -714,6 +724,7 @@ public class HTTPClient implements RESTClient {
     private ObjectMapper mapper = ObjectMapperProvider.objectMapper();
     private AuthDataProvider authDataProvider;
     private Runnable beforeConnectHandler;
+    private HTTPClientConfig httpClientConfig;
 
     private Builder(Map<String, String> properties) {
       this.properties = properties;
@@ -795,7 +806,13 @@ public class HTTPClient implements RESTClient {
      */
     public HTTPClient build() {
 
-      return new HTTPClient(uri, baseHeaders, mapper, authDataProvider, beforeConnectHandler);
+      return new HTTPClient(
+          uri, baseHeaders, mapper, authDataProvider, beforeConnectHandler, httpClientConfig);
+    }
+
+    public Builder withHttpClientConfig(HTTPClientConfig httpClientConfig) {
+      this.httpClientConfig = httpClientConfig;
+      return this;
     }
   }
 
